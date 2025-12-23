@@ -75,7 +75,7 @@ const FAQ: React.FC = () => {
     {
       question: "How customizable is it?",
       answer:
-        "Baba_Resume2.0 offers significant flexibility. You can choose from various professional templates, adjust colors, fonts, and layout spacing. Our AI suggestions also help you tailor the content to specific job descriptions.",
+        "Magic Resume offers significant flexibility. You can choose from various professional templates, adjust colors, fonts, and layout spacing. Our AI suggestions also help you tailor the content to specific job descriptions.",
     },
   ];
 
