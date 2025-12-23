@@ -35,14 +35,8 @@ export default function Navbar() {
         <div className="flex items-center justify-between h-16">
           {/* Logo Section */}
           <div className="flex items-center gap-2 cursor-pointer">
-            <div className="relative w-8 h-8 flex items-center justify-center">
-              <Image
-                src="https://slelguoygbfzlpylpxfs.supabase.co/storage/v1/object/public/test-clones/77ba5549-92dc-4b2e-a2cb-758e9202b940-magicv-art/assets/icons/icon-2.png"
-                alt="Baba_Resume2.0 Logo"
-                width={32}
-                height={32}
-                className="object-contain"
-              />
+            <div className="relative w-8 h-8 flex items-center justify-center bg-black rounded-lg">
+              <span className="text-white font-bold text-xl">V</span>
             </div>
             <span 
               className="font-bold text-[24px] tracking-tight text-[#030712]"
