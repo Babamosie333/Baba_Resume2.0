@@ -53,9 +53,9 @@ const FAQ: React.FC = () => {
 
   const faqs = [
     {
-      question: "Is Magic Resume free to use?",
+      question: "Is Baba_Resume2.0 free to use?",
       answer:
-        "Yes, Magic Resume is completely free to use. You can create, edit, and export your resume without any hidden costs or subscriptions. We believe in providing accessible career tools for everyone.",
+        "Yes, Baba_Resume2.0 is completely free to use. You can create, edit, and export your resume without any hidden costs or subscriptions. We believe in providing accessible career tools for everyone.",
     },
     {
       question: "Is my resume data secure?",
@@ -75,7 +75,7 @@ const FAQ: React.FC = () => {
     {
       question: "How customizable is it?",
       answer:
-        "Magic Resume offers significant flexibility. You can choose from various professional templates, adjust colors, fonts, and layout spacing. Our AI suggestions also help you tailor the content to specific job descriptions.",
+        "Baba_Resume2.0 offers significant flexibility. You can choose from various professional templates, adjust colors, fonts, and layout spacing. Our AI suggestions also help you tailor the content to specific job descriptions.",
     },
   ];
 

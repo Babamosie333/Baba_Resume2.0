@@ -45,7 +45,7 @@ const CTA = () => {
           
           {/* Subtext */}
           <p className="text-xl text-muted-foreground mb-12 max-w-2xl mx-auto leading-relaxed">
-            Start using Magic Resume now to create an impressive resume
+            Start using Baba_Resume2.0 now to create an impressive resume
           </p>
 
           {/* CTA Button Wrapper */}
