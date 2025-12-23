@@ -50,7 +50,7 @@ const HeroSection = () => {
 
                   {/* Sub-headline */}
                   <p className="text-[1.125rem] text-[#71717A] mb-8 leading-relaxed">
-                    Magic Resume uses AI technology to help you quickly create professional resumes. 
+                    Baba_Resume2.0 uses AI technology to help you quickly create professional resumes. 
                     No registration required, free to use, with secure data storage.
                   </p>
 
