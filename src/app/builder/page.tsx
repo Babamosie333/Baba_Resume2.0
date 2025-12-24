@@ -12,47 +12,83 @@ import {
 } from "lucide-react";
 import { useLanguage } from "@/components/language-provider";
 
-interface ResumeData {
-  personalInfo: {
-    fullName: string;
-    email: string;
-    phone: string;
-    location: string;
-    summary: string;
-  };
-  experience: {
-    company: string;
-    role: string;
-    duration: string;
-    description: string;
-  }[];
-  education: {
-    school: string;
-    degree: string;
-    year: string;
-  }[];
-  projects: {
-    name: string;
-    link: string;
-    description: string;
-  }[];
-  skills: string[];
-  languages: string[];
-}
-
-function BuilderContent() {
-  const { t } = useLanguage();
-  const searchParams = useSearchParams();
-  const [templateId, setTemplateId] = useState(searchParams.get("template") || "modern");
+  interface ResumeData {
+    personalInfo: {
+      fullName: string;
+      email: string;
+      phone: string;
+      location: string;
+      summary: string;
+      photo?: string;
+      availability?: string;
+    };
+    experience: {
+      company: string;
+      role: string;
+      duration: string;
+      description: string;
+    }[];
+    education: {
+      school: string;
+      degree: string;
+      year: string;
+    }[];
+    projects: {
+      name: string;
+      link: string;
+      description: string;
+    }[];
+    skills: string[];
+    languages: string[];
+  }
   
-  const [data, setData] = useState<ResumeData>({
-    personalInfo: { fullName: "", email: "", phone: "", location: "", summary: "" },
-    experience: [{ company: "", role: "", duration: "", description: "" }],
-    education: [{ school: "", degree: "", year: "" }],
-    projects: [{ name: "", link: "", description: "" }],
-    skills: [""],
-    languages: [""],
-  });
+  function BuilderContent() {
+    const { t } = useLanguage();
+    const searchParams = useSearchParams();
+    const [templateId, setTemplateId] = useState(searchParams.get("template") || "modern");
+    
+    const [data, setData] = useState<ResumeData>({
+      personalInfo: { 
+        fullName: "Vikram Singh", 
+        email: "vikramsingh14052006@gmail.com", 
+        phone: "+91 8081477034", 
+        location: "Kanpur, India", 
+        summary: "Passionate software developer with experience in building modern web applications. Focused on creating efficient and user-friendly solutions.",
+        availability: "Mon - Fri, 9 AM - 6 PM"
+      },
+      experience: [{ 
+        company: "Baba_Resume2.0", 
+        role: "Lead Developer", 
+        duration: "Jan 2024 - Present", 
+        description: "Leading the development of a smart AI resume builder. Implemented multilingual support and real-time preview features." 
+      }],
+      education: [{ 
+        school: "Example University", 
+        degree: "Bachelor of Science in Computer Science", 
+        year: "2020 - 2024" 
+      }],
+      projects: [{ 
+        name: "Magic Resume Clone", 
+        link: "https://github.com/Babamosie333/Baba_Resume2.0", 
+        description: "A professional resume builder with AI detection and advice features." 
+      }],
+      skills: ["React", "Next.js", "TypeScript", "Tailwind CSS"],
+      languages: ["English", "Hindi"],
+    });
+
+    const handlePhotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+      const file = e.target.files?.[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          setData(prev => ({
+            ...prev,
+            personalInfo: { ...prev.personalInfo, photo: reader.result as string }
+          }));
+        };
+        reader.readAsDataURL(file);
+      }
+    };
 
   const handlePersonalInfoChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
