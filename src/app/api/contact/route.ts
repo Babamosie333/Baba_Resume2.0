@@ -28,9 +28,8 @@ export async function POST(request: Request) {
       
       const fieldErrors: Record<string, string> = {};
       result.error.issues.forEach((issue) => {
-        if (issue.path[0]) {
-          fieldErrors[issue.path[0].toString()] = issue.message;
-        }
+        const path = issue.path[0]?.toString() || 'unknown';
+        fieldErrors[path] = issue.message;
       });
 
       return NextResponse.json(
