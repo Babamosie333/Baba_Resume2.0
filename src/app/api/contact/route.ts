@@ -3,23 +3,29 @@ import { NextResponse } from 'next/server';
 import { z } from 'zod';
 
 const contactSchema = z.object({
-  firstName: z.string().min(1, 'First name is required').max(100),
-  lastName: z.string().min(1, 'Last name is required').max(100),
+  firstName: z.string().min(1, 'First name is required').max(500),
+  lastName: z.string().min(1, 'Last name is required').max(500),
   email: z.string().email('Invalid email address'),
-  subject: z.string().min(1, 'Subject is required').max(100),
-  message: z.string().min(1, 'Message is required').max(2000),
+  subject: z.string().min(1, 'Subject is required').max(500),
+  message: z.string().min(1, 'Message is required').max(10000),
 });
 
 export async function POST(request: Request) {
   try {
-    const apiKey = process.env.RESEND_API_KEY;
-    
     const body = await request.json();
-    console.log('Contact form body:', body);
+    console.log('Incoming contact form request:', JSON.stringify(body, null, 2));
 
     const result = contactSchema.safeParse(body);
 
     if (!result.success) {
+      const errorDetails = result.error.errors.map(err => ({
+        field: err.path.join('.'),
+        message: err.message,
+        code: err.code
+      }));
+      
+      console.error('Validation failed details:', JSON.stringify(errorDetails, null, 2));
+      
       const fieldErrors: Record<string, string> = {};
       result.error.issues.forEach((issue) => {
         if (issue.path[0]) {
@@ -27,19 +33,22 @@ export async function POST(request: Request) {
         }
       });
 
-      console.error('Validation errors:', fieldErrors);
       return NextResponse.json(
         { 
-          success: false,
+          success: false, 
           error: 'Validation failed', 
-          details: fieldErrors 
+          details: fieldErrors,
+          validationErrors: errorDetails 
         },
         { status: 400 }
       );
     }
 
+    const { firstName, lastName, email, subject, message } = result.data;
+    const apiKey = process.env.RESEND_API_KEY;
+
     if (!apiKey) {
-      console.error('RESEND_API_KEY is missing');
+      console.error('CRITICAL: RESEND_API_KEY is not defined in environment variables');
       return NextResponse.json(
         { success: false, error: 'Email service is not configured (missing API key)' },
         { status: 500 }
@@ -47,8 +56,7 @@ export async function POST(request: Request) {
     }
 
     const resend = new Resend(apiKey);
-    const { firstName, lastName, email, subject, message } = result.data;
-
+    console.log('Attempting to send email via Resend to vikramsingh14052008@gmail.com');
 
     const { data, error } = await resend.emails.send({
       from: 'Contact Form <onboarding@resend.dev>',
@@ -66,13 +74,18 @@ export async function POST(request: Request) {
     });
 
     if (error) {
-      console.error('Resend error:', error);
+      console.error('Resend service error:', JSON.stringify(error, null, 2));
       return NextResponse.json({ success: false, error: error.message }, { status: 400 });
     }
 
-    return NextResponse.json({ success: true, message: 'Email sent successfully', data });
+    console.log('Email sent successfully:', JSON.stringify(data, null, 2));
+    return NextResponse.json({ success: true, message: 'Message sent successfully', data });
   } catch (error: any) {
-    console.error('API error:', error);
-    return NextResponse.json({ success: false, error: error.message }, { status: 500 });
+    console.error('Unhandled API error:', error);
+    return NextResponse.json({ 
+      success: false, 
+      error: error.message || 'An unexpected error occurred',
+      stack: process.env.NODE_ENV === 'development' ? error.stack : undefined
+    }, { status: 500 });
   }
 }
