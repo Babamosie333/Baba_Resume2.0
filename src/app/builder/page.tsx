@@ -376,6 +376,32 @@ import { useLanguage } from "@/components/language-provider";
                     <Plus className="w-5 h-5 text-zinc-600 dark:text-zinc-400" />
                   </button>
                 </div>
+                
+                {/* GitHub Contributions Visual */}
+                <div className="mb-6 p-4 bg-zinc-50 dark:bg-zinc-950 rounded-lg border border-zinc-100 dark:border-zinc-800">
+                  <div className="flex items-center justify-between mb-3">
+                    <span className="text-[10px] font-bold uppercase text-zinc-400 tracking-wider">GitHub Contributions (Simulated)</span>
+                    <div className="flex gap-1">
+                      {[1, 2, 3, 4].map((i) => (
+                        <div key={i} className={`w-2 h-2 rounded-[1px] ${i === 4 ? 'bg-green-500' : i === 3 ? 'bg-green-600/60' : i === 2 ? 'bg-green-700/30' : 'bg-zinc-200 dark:bg-zinc-800'}`} />
+                      ))}
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-20 gap-1">
+                    {Array.from({ length: 40 }).map((_, i) => {
+                      const intensities = ['bg-zinc-100 dark:bg-zinc-800', 'bg-green-900/20', 'bg-green-700/40', 'bg-green-500/60', 'bg-green-500'];
+                      const randomIntensity = intensities[Math.floor(Math.random() * intensities.length)];
+                      return (
+                        <div 
+                          key={i} 
+                          className={`aspect-square w-full rounded-[1px] ${randomIntensity} transition-colors hover:ring-1 hover:ring-green-400 cursor-help`}
+                          title={`${Math.floor(Math.random() * 10)} contributions`}
+                        />
+                      );
+                    })}
+                  </div>
+                </div>
+
                 <div className="space-y-6">
                   {data.projects.map((proj, index) => (
                     <div key={index} className="space-y-4 pt-6 border-t border-zinc-100 dark:border-zinc-800 first:border-0 first:pt-0 relative group">
