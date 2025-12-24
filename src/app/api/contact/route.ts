@@ -34,6 +34,8 @@ export async function POST(request: Request) {
 
     const { firstName, lastName, email, subject, message } = result.data;
     const apiKey = process.env.RESEND_API_KEY;
+    console.log('API Key check:', apiKey ? `Found (starts with ${apiKey.substring(0, 3)}...)` : 'Missing');
+
 
     if (!apiKey) {
       return NextResponse.json(
