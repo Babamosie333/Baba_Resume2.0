@@ -9,18 +9,31 @@ import { useLanguage } from "@/components/language-provider";
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
-  const { theme, setTheme } = useTheme();
-  const { language, setLanguage, t } = useLanguage();
-  const [mounted, setMounted] = useState(false);
+    const { theme, setTheme } = useTheme();
+    const { language, setLanguage, t } = useLanguage();
+    const [mounted, setMounted] = useState(false);
+    const [starCount, setStarCount] = useState<string>("2,811");
+  
+    useEffect(() => {
+      setMounted(true);
+      const handleScroll = () => {
+        setIsScrolled(window.scrollY > 0);
+      };
 
-  useEffect(() => {
-    setMounted(true);
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 0);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+      // Fetch GitHub stars
+      fetch("https://api.github.com/repos/Babamosie333/Baba_Resume2.0")
+        .then(res => res.json())
+        .then(data => {
+          if (data.stargazers_count) {
+            setStarCount(data.stargazers_count.toLocaleString());
+          }
+        })
+        .catch(err => console.error("Error fetching stars:", err));
+
+      window.addEventListener("scroll", handleScroll);
+      return () => window.removeEventListener("scroll", handleScroll);
+    }, []);
+
 
   if (!mounted) return null;
 
