@@ -96,21 +96,21 @@ export default function FeatureAiDetection() {
           </div>
 
           {/* Right Image/Illustration Column */}
-          <div className="flex-1 w-full md:w-auto relative">
-            <div className="relative aspect-[3/2] w-full overflow-hidden rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 shadow-sm group">
-              {/* Decorative gradient overlay */}
-              <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-blue-600/10 z-10 pointer-events-none"></div>
-              
-              <div className="w-full h-full bg-white dark:bg-zinc-900 flex items-center justify-center">
-                <Image
-                  alt="Grammar check"
-                  src="https://slelguoygbfzlpylpxfs.supabase.co/storage/v1/object/public/test-clones/77ba5549-92dc-4b2e-a2cb-758e9202b940-magicv-art/assets/svgs/grammar-1.svg"
-                  fill
-                  className="object-contain p-4 z-1 transition-transform duration-500 ease-in-out group-hover:scale-105"
-                  priority
-                />
+            <div className="flex-1 w-full md:w-auto relative">
+              <div className="relative aspect-[3/2] w-full overflow-hidden rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white shadow-sm group">
+                {/* Decorative gradient overlay */}
+                <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-blue-600/10 z-10 pointer-events-none"></div>
+                
+                <div className="w-full h-full bg-white flex items-center justify-center">
+                  <Image
+                    alt="Grammar check"
+                    src="https://slelguoygbfzlpylpxfs.supabase.co/storage/v1/object/public/test-clones/77ba5549-92dc-4b2e-a2cb-758e9202b940-magicv-art/assets/svgs/grammar-1.svg"
+                    fill
+                    className="object-contain p-4 z-1 transition-transform duration-500 ease-in-out group-hover:scale-105"
+                    priority
+                  />
+                </div>
               </div>
-            </div>
 
             {/* Background Blur decorations */}
             <div className="absolute inset-0 -z-10 blur-3xl opacity-60">
