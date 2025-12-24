@@ -40,14 +40,14 @@ export async function POST(request: Request) {
 
     console.log(`Environment Variable Check - RESEND_API_KEY: ${envStatus}`);
 
-    // Temporary debug mode: Return envStatus without sending email
+    // DEBUG: Always return envStatus for now as requested
     return NextResponse.json({ 
       success: true, 
       message: 'Debug: API check complete',
       envStatus
     });
 
-    /* 
+    /* RE-ENABLE THIS LATER
     if (!apiKey) {
       console.error('CRITICAL: RESEND_API_KEY is missing');
       return NextResponse.json(
@@ -94,6 +94,7 @@ export async function POST(request: Request) {
         error: 'Failed to send message, please try again later' 
       }, { status: 500 });
     }
+    */
   } catch (error: any) {
     console.error('Unhandled API error:', error);
     return NextResponse.json({ 
@@ -102,4 +103,3 @@ export async function POST(request: Request) {
     }, { status: 500 });
   }
 }
-*/
