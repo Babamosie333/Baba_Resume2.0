@@ -18,10 +18,10 @@ export async function POST(request: Request) {
     const result = contactSchema.safeParse(body);
 
     if (!result.success) {
-      const errorDetails = result.error.errors.map(err => ({
-        field: err.path.join('.'),
-        message: err.message,
-        code: err.code
+      const errorDetails = result.error.issues.map(issue => ({
+        field: issue.path.join('.'),
+        message: issue.message,
+        code: issue.code
       }));
       
       console.error('Validation failed details:', JSON.stringify(errorDetails, null, 2));
