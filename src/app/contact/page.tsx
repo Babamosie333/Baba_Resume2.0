@@ -70,11 +70,13 @@ export default function ContactPage() {
 
       const result = await response.json();
 
-      if (!response.ok) {
-        throw new Error(result.error || 'Failed to send message');
+      if (result.details) {
+        setErrors(result.details);
       }
-      
-      setIsSuccess(true);
+      throw new Error(result.error || 'Failed to send message');
+    }
+    
+    setIsSuccess(true);
       setFormData({
         firstName: "",
         lastName: "",
