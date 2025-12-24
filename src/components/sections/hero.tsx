@@ -1,5 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { Sparkles, ArrowRight } from 'lucide-react';
 
 /**
@@ -12,11 +13,11 @@ const HeroSection = () => {
     <div className="relative bg-gradient-to-b from-[#f8f9fb] to-white min-h-screen">
       {/* Announcement Badge - Positioned below the typical header area */}
       <div className="absolute top-24 left-1/2 -translate-x-1/2 z-10 w-full flex justify-center px-4">
-        <div className="relative inline-flex items-center gap-3 px-5 py-2.5 text-sm font-medium rounded-full bg-white shadow-[0_1px_1px_rgba(0,0,0,0.1)] border border-slate-200/80 hover:shadow-[0_2px_2px_rgba(0,0,0,0.1)] transition-all duration-300 cursor-pointer group">
+        <Link href="/builder" className="relative inline-flex items-center gap-3 px-5 py-2.5 text-sm font-medium rounded-full bg-white shadow-[0_1px_1px_rgba(0,0,0,0.1)] border border-slate-200/80 hover:shadow-[0_2px_2px_rgba(0,0,0,0.1)] transition-all duration-300 cursor-pointer group">
           <span className="text-slate-600 whitespace-nowrap">
             New AI Resume Enhancement Feature is Live
           </span>
-        </div>
+        </Link>
       </div>
 
       <section className="relative min-h-[85vh] flex items-center pt-32 lg:pt-16 overflow-hidden">
@@ -56,13 +57,13 @@ const HeroSection = () => {
 
                   {/* CTA Buttons */}
                   <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-                    <button className="pill-button bg-black text-white hover:bg-black/90 inline-flex items-center justify-center gap-2 h-[44px] text-lg px-8">
+                    <Link href="/builder" className="pill-button bg-black text-white hover:bg-black/90 inline-flex items-center justify-center gap-2 h-[44px] text-lg px-8">
                       Get Started
                       <ArrowRight className="w-5 h-5" />
-                    </button>
-                    <button className="pill-button bg-white border border-[#e4e4e7] text-black hover:bg-[#f8f9fb] inline-flex items-center justify-center h-[44px] text-lg px-8">
+                    </Link>
+                    <Link href="/templates" className="pill-button bg-white border border-[#e4e4e7] text-black hover:bg-[#f8f9fb] inline-flex items-center justify-center h-[44px] text-lg px-8">
                       Browse Templates
-                    </button>
+                    </Link>
                   </div>
                 </div>
               </div>
