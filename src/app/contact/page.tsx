@@ -69,6 +69,7 @@ export default function ContactPage() {
       
       const mailtoUrl = `mailto:vikramsingh1405206@gmail.com?subject=${subject}&body=${body}`;
       
+      // Directly open mailto link
       window.location.href = mailtoUrl;
 
       setIsSuccess(true);
