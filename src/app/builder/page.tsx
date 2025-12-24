@@ -763,9 +763,12 @@ import { useLanguage } from "@/components/language-provider";
 
   if (templateId === "creative") {
     return (
-      <div className={containerClass}>
+      <div className={containerClass} style={isPrint ? {} : containerStyle}>
         <div className="grid grid-cols-3 gap-8 h-full">
           <div className="bg-zinc-50 -m-12 p-12 pt-20">
+            {data.personalInfo.photo && (
+              <img src={data.personalInfo.photo} alt="Profile" className="w-full aspect-square object-cover rounded-xl mb-6 border-2 border-white shadow-sm" />
+            )}
             <h1 className="text-2xl font-black mb-6 leading-tight">{data.personalInfo.fullName || "YOUR NAME"}</h1>
             
             <div className="space-y-6">
@@ -867,16 +870,21 @@ import { useLanguage } from "@/components/language-provider";
 
   // Modern (Default)
   return (
-    <div className={containerClass}>
-      <div className="text-center mb-8">
-        <h1 className="text-3xl font-bold tracking-tight uppercase mb-2">
-          {data.personalInfo.fullName || "YOUR NAME"}
-        </h1>
-        <div className="flex flex-wrap justify-center gap-x-4 gap-y-1 text-sm text-zinc-600 font-medium">
-          {data.personalInfo.email && <div className="flex items-center gap-1"><Mail className="w-3 h-3" /> {data.personalInfo.email}</div>}
-          {data.personalInfo.phone && <div className="flex items-center gap-1"><Phone className="w-3 h-3" /> {data.personalInfo.phone}</div>}
-          {data.personalInfo.location && <div className="flex items-center gap-1"><MapPin className="w-3 h-3" /> {data.personalInfo.location}</div>}
+    <div className={containerClass} style={isPrint ? {} : containerStyle}>
+      <div className="flex items-start justify-between mb-8">
+        <div className="flex-1">
+          <h1 className="text-3xl font-bold tracking-tight uppercase mb-2">
+            {data.personalInfo.fullName || "YOUR NAME"}
+          </h1>
+          <div className="flex flex-wrap gap-x-4 gap-y-1 text-sm text-zinc-600 font-medium">
+            {data.personalInfo.email && <div className="flex items-center gap-1"><Mail className="w-3 h-3" /> {data.personalInfo.email}</div>}
+            {data.personalInfo.phone && <div className="flex items-center gap-1"><Phone className="w-3 h-3" /> {data.personalInfo.phone}</div>}
+            {data.personalInfo.location && <div className="flex items-center gap-1"><MapPin className="w-3 h-3" /> {data.personalInfo.location}</div>}
+          </div>
         </div>
+        {data.personalInfo.photo && (
+          <img src={data.personalInfo.photo} alt="Profile" className="w-24 h-24 object-cover rounded-lg border border-zinc-200" />
+        )}
       </div>
 
       <div className="space-y-6">
