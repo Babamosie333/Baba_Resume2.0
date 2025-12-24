@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { Languages, Sun, Moon, Star, Menu } from "lucide-react";
 
 /**
@@ -34,7 +35,7 @@ export default function Navbar() {
       <div className="mx-auto max-w-[1200px] px-4">
         <div className="flex items-center justify-between h-16">
           {/* Logo Section */}
-          <div className="flex items-center gap-2 cursor-pointer">
+          <Link href="/" className="flex items-center gap-2 cursor-pointer">
             <div className="relative w-8 h-8 flex items-center justify-center bg-black rounded-lg">
               <span className="text-white font-bold text-xl">V</span>
             </div>
@@ -44,7 +45,7 @@ export default function Navbar() {
             >
               Baba_Resume2.0
             </span>
-          </div>
+          </Link>
 
           {/* Action Buttons Section */}
           <div className="hidden md:flex items-center gap-4">
@@ -82,9 +83,9 @@ export default function Navbar() {
             </a>
 
             {/* CTA Button */}
-            <button className="inline-flex items-center justify-center whitespace-nowrap rounded-md font-medium transition-all bg-[#000000] text-white hover:opacity-90 h-8 text-sm px-4 shadow-sm active:scale-95">
+            <Link href="/builder" className="inline-flex items-center justify-center whitespace-nowrap rounded-md font-medium transition-all bg-[#000000] text-white hover:opacity-90 h-8 text-sm px-4 shadow-sm active:scale-95">
               Get Started
-            </button>
+            </Link>
           </div>
 
           {/* Mobile Menu Icon */}
