@@ -623,7 +623,7 @@ import { useLanguage } from "@/components/language-provider";
 
             {/* Preview Side */}
             <div className="lg:sticky lg:top-24 h-fit no-print">
-              <ResumePreview data={data} templateId={templateId} />
+              <ResumePreview data={data} templateId={templateId} fontSize={fontSize} />
             </div>
           </div>
         </div>
@@ -631,7 +631,7 @@ import { useLanguage } from "@/components/language-provider";
 
       {/* Print View Wrapper */}
       <div className="hidden print:block print-only">
-        <ResumePreview data={data} templateId={templateId} isPrint />
+        <ResumePreview data={data} templateId={templateId} fontSize={fontSize} isPrint />
       </div>
 
       <div className="no-print">
@@ -641,16 +641,22 @@ import { useLanguage } from "@/components/language-provider";
   );
 }
 
-  function ResumePreview({ data, templateId, isPrint = false }: { data: ResumeData, templateId: string, isPrint?: boolean }) {
+  function ResumePreview({ data, templateId, fontSize = 1, isPrint = false }: { data: ResumeData, templateId: string, fontSize?: number, isPrint?: boolean }) {
     const { t } = useLanguage();
     
-    const containerClass = `bg-white aspect-[1/1.414] shadow-xl overflow-hidden transition-all text-black resume-container ${
-      isPrint ? "w-full p-12" : "rounded-xl border border-zinc-200 dark:border-zinc-800 p-12"
+    const containerStyle = {
+      transform: isPrint ? 'none' : `scale(${fontSize})`,
+      transformOrigin: 'top center',
+      fontSize: `${fontSize * 100}%`,
+    };
+
+    const containerClass = `bg-white shadow-xl overflow-hidden transition-all text-black resume-container ${
+      isPrint ? "w-full p-12 min-h-screen" : "rounded-xl border border-zinc-200 dark:border-zinc-800 p-12 aspect-[1/1.414]"
     }`;
 
     if (templateId === "minimal") {
       return (
-        <div className={containerClass}>
+        <div className={containerClass} style={isPrint ? {} : containerStyle}>
           <div className="flex justify-between border-b-2 border-black pb-4 mb-6">
             <div>
               <h1 className="text-4xl font-light tracking-widest uppercase mb-1">{data.personalInfo.fullName || "YOUR NAME"}</h1>
