@@ -34,14 +34,14 @@ export async function POST(request: Request) {
 
     const { firstName, lastName, email, subject, message } = result.data;
     const apiKey = process.env.RESEND_API_KEY;
-    console.log('API Key check:', apiKey ? `Found (starts with ${apiKey.substring(0, 3)}...)` : 'Missing');
-
-
+    const envStatus = apiKey ? (apiKey.startsWith('re_') ? 'valid_format' : 'invalid_format') : 'missing';
+    
     if (!apiKey) {
       return NextResponse.json(
         { 
           success: false, 
-          error: 'RESEND_API_KEY is missing from environment. Please ensure you have added it to the project dashboard and that it is available in the current scope (Development/Production).',
+          error: 'RESEND_API_KEY is missing from environment.',
+          envStatus
         },
         { status: 500 }
       );
