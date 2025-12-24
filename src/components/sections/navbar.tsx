@@ -48,20 +48,37 @@ export default function Navbar() {
     >
       <div className="mx-auto max-w-[1200px] px-4">
         <div className="flex items-center justify-between h-16">
-          {/* Logo Section */}
-          <Link href="/" className="flex items-center gap-2 cursor-pointer">
-            <div className="relative w-8 h-8 flex items-center justify-center bg-black dark:bg-white rounded-lg">
-              <span className="text-white dark:text-black font-bold text-xl">V</span>
-            </div>
-            <span 
-              className="font-bold text-[24px] tracking-tight text-[#030712] dark:text-white"
-              style={{ fontFamily: 'var(--font-sans)' }}
-            >
-              Baba_Resume2.0
-            </span>
-          </Link>
+            {/* Logo Section */}
+            <Link href="/" className="flex items-center gap-2 cursor-pointer">
+              <div className="relative w-8 h-8 flex items-center justify-center bg-black dark:bg-white rounded-lg">
+                <span className="text-white dark:text-black font-bold text-xl">V</span>
+              </div>
+              <span 
+                className="font-bold text-[24px] tracking-tight text-[#030712] dark:text-white"
+                style={{ fontFamily: 'var(--font-sans)' }}
+              >
+                Baba_Resume2.0
+              </span>
+            </Link>
 
-          {/* Action Buttons Section */}
+            {/* Navigation Links */}
+            <nav className="hidden lg:flex items-center gap-6">
+              <Link href="/templates" className="text-sm font-medium text-zinc-600 dark:text-zinc-400 hover:text-black dark:hover:text-white transition-colors uppercase tracking-wide">
+                {t("nav.templates")}
+              </Link>
+              <Link href="/pricing" className="text-sm font-medium text-zinc-600 dark:text-zinc-400 hover:text-black dark:hover:text-white transition-colors uppercase tracking-wide">
+                {t("nav.pricing")}
+              </Link>
+              <Link href="/about" className="text-sm font-medium text-zinc-600 dark:text-zinc-400 hover:text-black dark:hover:text-white transition-colors uppercase tracking-wide">
+                {t("nav.about")}
+              </Link>
+              <Link href="/contact" className="text-sm font-medium text-zinc-600 dark:text-zinc-400 hover:text-black dark:hover:text-white transition-colors uppercase tracking-wide">
+                {t("nav.contact")}
+              </Link>
+            </nav>
+
+            {/* Action Buttons Section */}
+
           <div className="hidden md:flex items-center gap-4">
             {/* Language Selector */}
             <button 
