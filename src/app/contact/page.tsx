@@ -10,6 +10,7 @@ export default function ContactPage() {
   const { t } = useLanguage();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -21,22 +22,40 @@ export default function ContactPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setIsSuccess(false);
+    setErrorMessage("");
     
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1500));
-    
-    setIsSubmitting(false);
-    setIsSuccess(true);
-    setFormData({
-      firstName: "",
-      lastName: "",
-      email: "",
-      subject: "General Inquiry",
-      message: ""
-    });
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
 
-    // Hide success message after 5 seconds
-    setTimeout(() => setIsSuccess(false), 5000);
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.error || 'Failed to send message');
+      }
+      
+      setIsSuccess(true);
+      setFormData({
+        firstName: "",
+        lastName: "",
+        email: "",
+        subject: "General Inquiry",
+        message: ""
+      });
+
+      // Hide success message after 5 seconds
+      setTimeout(() => setIsSuccess(false), 5000);
+    } catch (error: any) {
+      setErrorMessage(error.message || "Failed to send message, please try again later");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -49,6 +68,14 @@ export default function ContactPage() {
             <div className="mb-8 p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-xl animate-in fade-in slide-in-from-top-4 duration-300">
               <p className="text-green-800 dark:text-green-400 text-center font-medium">
                 Your message has been sent successfully. We will get back to you soon.
+              </p>
+            </div>
+          )}
+
+          {errorMessage && (
+            <div className="mb-8 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl animate-in fade-in slide-in-from-top-4 duration-300">
+              <p className="text-red-800 dark:text-red-400 text-center font-medium">
+                {errorMessage}
               </p>
             </div>
           )}
