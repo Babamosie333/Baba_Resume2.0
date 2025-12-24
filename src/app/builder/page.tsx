@@ -445,7 +445,10 @@ import { useLanguage } from "@/components/language-provider";
                       ))}
                     </div>
                   </div>
-                  <div className="grid grid-cols-10 sm:grid-cols-20 gap-1">
+                  <div 
+                    className="grid gap-1"
+                    style={{ gridTemplateColumns: 'repeat(20, minmax(0, 1fr))' }}
+                  >
                     {mounted && githubStats ? Array.from({ length: 40 }).map((_, i) => {
                       const intensities = ['bg-zinc-100 dark:bg-zinc-800', 'bg-green-900/20', 'bg-green-700/40', 'bg-green-500/60', 'bg-green-500'];
                       const intensityIndex = githubStats.intensities[i];
