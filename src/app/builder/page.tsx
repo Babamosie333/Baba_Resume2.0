@@ -653,7 +653,7 @@ function ResumePreview({ data, templateId, fontSize = 1, githubStats, mounted, i
     transform: isPrint ? 'none' : `scale(${fontSize})`,
     transformOrigin: 'top center',
     width: isPrint ? '100%' : '210mm',
-    minHeight: isPrint ? 'auto' : '297mm',
+    minHeight: '297mm',
     margin: isPrint ? '0' : '0 auto',
   };
 
