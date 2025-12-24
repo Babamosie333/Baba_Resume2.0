@@ -259,9 +259,9 @@ function BuilderContent() {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
             {/* Editor Side */}
-            <div className="space-y-6 max-h-[calc(100vh-200px)] overflow-y-auto pr-2 custom-scrollbar">
+            <div className="space-y-6 max-h-[calc(100vh-120px)] overflow-y-auto pr-2 custom-scrollbar pb-20">
                 {/* Personal Info */}
                 <section className="bg-white dark:bg-zinc-900 p-6 rounded-xl border border-zinc-200 dark:border-zinc-800 shadow-sm">
                   <div className="flex items-center gap-2 mb-4">
