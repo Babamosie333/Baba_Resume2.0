@@ -181,18 +181,17 @@ import { useLanguage } from "@/components/language-provider";
           .no-print { display: none !important; }
           .print-only { display: block !important; }
           body { background: white !important; padding: 0 !important; margin: 0 !important; }
-          @page { size: auto; margin: 0mm; }
+          @page { size: A4; margin: 10mm; }
           .resume-container { 
             border: none !important; 
             box-shadow: none !important; 
             margin: 0 !important; 
-            padding: 20mm !important;
-            width: 210mm !important;
-            height: 297mm !important;
-            position: absolute;
-            top: 0;
-            left: 0;
+            padding: 0 !important;
+            width: 100% !important;
+            height: auto !important;
+            position: relative !important;
           }
+          .page-break { page-break-before: always; }
         }
       `}</style>
 
@@ -209,14 +208,14 @@ import { useLanguage } from "@/components/language-provider";
                 <ChevronLeft className="w-5 h-5" />
               </Link>
               <div>
-                <h1 className="text-3xl font-bold text-[#030712] dark:text-white tracking-tight">{t("builder.title")}</h1>
+                <h1 className="text-3xl font-bold text-[#030712] dark:text-white tracking-tight">Magic Resume</h1>
                 <p className="text-muted-foreground mt-1 dark:text-zinc-400">{t("builder.subtitle")}</p>
               </div>
             </div>
             <div className="flex items-center gap-3">
               <div className="flex items-center gap-1 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-lg p-1 mr-2">
                 <button 
-                  onClick={() => setFontSize(prev => Math.max(0.7, prev - 0.05))}
+                  onClick={() => setFontSize(prev => Math.max(0.5, prev - 0.05))}
                   className="p-1.5 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded text-zinc-500"
                   title="Decrease Font Size"
                 >
@@ -224,7 +223,7 @@ import { useLanguage } from "@/components/language-provider";
                 </button>
                 <div className="w-[1px] h-4 bg-zinc-200 dark:bg-zinc-800" />
                 <button 
-                  onClick={() => setFontSize(prev => Math.min(1.3, prev + 0.05))}
+                  onClick={() => setFontSize(prev => Math.min(1.5, prev + 0.05))}
                   className="p-1.5 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded text-zinc-500"
                   title="Increase Font Size"
                 >
@@ -414,7 +413,7 @@ import { useLanguage } from "@/components/language-provider";
                         <textarea 
                           value={exp.description}
                           onChange={(e) => handleListChange('experience', index, 'description', e.target.value)}
-                          placeholder={t("builder.description")}
+                          placeholder={t("builder.descriptionPlaceholder")}
                           className="w-full px-3 py-2 rounded-lg border border-zinc-200 dark:border-zinc-800 dark:bg-zinc-950 dark:text-white focus:outline-none focus:ring-2 focus:ring-black/5 h-24 resize-none"
                         />
                       </div>
@@ -625,8 +624,8 @@ import { useLanguage } from "@/components/language-provider";
             </div>
 
             {/* Preview Side */}
-            <div className="lg:sticky lg:top-24 h-fit no-print">
-              <ResumePreview data={data} templateId={templateId} fontSize={fontSize} />
+            <div className="lg:sticky lg:top-24 h-[calc(100vh-140px)] overflow-y-auto no-print custom-scrollbar pr-2">
+              <ResumePreview data={data} templateId={templateId} fontSize={fontSize} githubStats={githubStats} mounted={mounted} />
             </div>
           </div>
         </div>
@@ -634,7 +633,7 @@ import { useLanguage } from "@/components/language-provider";
 
       {/* Print View Wrapper */}
       <div className="hidden print:block print-only">
-        <ResumePreview data={data} templateId={templateId} fontSize={fontSize} isPrint />
+        <ResumePreview data={data} templateId={templateId} fontSize={fontSize} githubStats={githubStats} mounted={mounted} isPrint />
       </div>
 
       <div className="no-print">
@@ -644,22 +643,38 @@ import { useLanguage } from "@/components/language-provider";
   );
 }
 
-  function ResumePreview({ data, templateId, fontSize = 1, isPrint = false }: { data: ResumeData, templateId: string, fontSize?: number, isPrint?: boolean }) {
+  function ResumePreview({ data, templateId, fontSize = 1, githubStats, mounted, isPrint = false }: { data: ResumeData, templateId: string, fontSize?: number, githubStats?: any, mounted?: boolean, isPrint?: boolean }) {
     const { t } = useLanguage();
     
     const containerStyle = {
       transform: isPrint ? 'none' : `scale(${fontSize})`,
       transformOrigin: 'top center',
-      fontSize: `${fontSize * 100}%`,
+      width: isPrint ? '100%' : '210mm',
+      minHeight: isPrint ? 'auto' : '297mm',
+      margin: isPrint ? '0' : '0 auto',
     };
 
-    const containerClass = `bg-white shadow-xl overflow-hidden transition-all text-black resume-container ${
-      isPrint ? "w-full p-12 min-h-screen" : "rounded-xl border border-zinc-200 dark:border-zinc-800 p-12 aspect-[1/1.414]"
+    const containerClass = `bg-white shadow-xl transition-all text-black resume-container ${
+      isPrint ? "w-full p-12" : "rounded-xl border border-zinc-200 dark:border-zinc-800 p-12"
     }`;
+
+    const GithubGrid = () => (
+      <div className="mt-4 mb-2 p-3 bg-zinc-50 rounded-lg border border-zinc-100 no-print">
+        <div className="flex items-center justify-between mb-2">
+          <span className="text-[8px] font-bold uppercase text-zinc-400 tracking-wider">GitHub Contributions</span>
+        </div>
+        <div className="grid gap-0.5" style={{ gridTemplateColumns: 'repeat(20, minmax(0, 1fr))' }}>
+          {mounted && githubStats ? Array.from({ length: 40 }).map((_, i) => {
+            const intensities = ['bg-zinc-100', 'bg-green-100', 'bg-green-300', 'bg-green-500', 'bg-green-700'];
+            return <div key={i} className={`aspect-square w-full rounded-[1px] ${intensities[githubStats.intensities[i]]}`} />;
+          }) : null}
+        </div>
+      </div>
+    );
 
     if (templateId === "minimal") {
       return (
-        <div className={containerClass} style={isPrint ? {} : containerStyle}>
+        <div className={containerClass} style={containerStyle}>
           <div className="flex justify-between border-b-2 border-black pb-4 mb-6">
             <div>
               <h1 className="text-4xl font-light tracking-widest uppercase mb-1">{data.personalInfo.fullName || "YOUR NAME"}</h1>
@@ -719,6 +734,7 @@ import { useLanguage } from "@/components/language-provider";
                   )
                 ))}
               </div>
+              <GithubGrid />
             </section>
           )}
 
@@ -766,7 +782,7 @@ import { useLanguage } from "@/components/language-provider";
 
   if (templateId === "creative") {
     return (
-      <div className={containerClass} style={isPrint ? {} : containerStyle}>
+      <div className={containerClass} style={containerStyle}>
         <div className="grid grid-cols-3 gap-8 h-full">
           <div className="bg-zinc-50 -m-12 p-12 pt-20">
             {data.personalInfo.photo && (
@@ -863,6 +879,7 @@ import { useLanguage } from "@/components/language-provider";
                     )
                   ))}
                 </div>
+                <GithubGrid />
               </section>
             )}
           </div>
@@ -873,7 +890,7 @@ import { useLanguage } from "@/components/language-provider";
 
   // Modern (Default)
   return (
-    <div className={containerClass} style={isPrint ? {} : containerStyle}>
+    <div className={containerClass} style={containerStyle}>
       <div className="flex items-start justify-between mb-8">
         <div className="flex-1">
           <h1 className="text-3xl font-bold tracking-tight uppercase mb-2">
@@ -884,6 +901,7 @@ import { useLanguage } from "@/components/language-provider";
             {data.personalInfo.phone && <div className="flex items-center gap-1"><Phone className="w-3 h-3" /> {data.personalInfo.phone}</div>}
             {data.personalInfo.location && <div className="flex items-center gap-1"><MapPin className="w-3 h-3" /> {data.personalInfo.location}</div>}
           </div>
+          {data.personalInfo.availability && <div className="text-xs font-bold text-zinc-400 mt-2 uppercase tracking-wide">{t("builder.availability")}: {data.personalInfo.availability}</div>}
         </div>
         {data.personalInfo.photo && (
           <img src={data.personalInfo.photo} alt="Profile" className="w-24 h-24 object-cover rounded-lg border border-zinc-200" />
@@ -934,6 +952,7 @@ import { useLanguage } from "@/components/language-provider";
                 )
               ))}
             </div>
+            <GithubGrid />
           </div>
         )}
 
