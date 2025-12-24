@@ -39,7 +39,7 @@ export async function POST(request: Request) {
       return NextResponse.json(
         { 
           success: false, 
-          error: 'RESEND_API_KEY is missing from environment. Please add it to your project dashboard environment variables.',
+          error: 'RESEND_API_KEY is missing from environment. Please ensure you have added it to the project dashboard and that it is available in the current scope (Development/Production).',
         },
         { status: 500 }
       );
@@ -47,10 +47,10 @@ export async function POST(request: Request) {
 
     const resend = new Resend(apiKey);
 
-    // Attempt to send email and log full response
     console.log('Sending email via Resend...');
-    const resendResponse = await resend.emails.send({
-      from: 'onboarding@resend.dev', // Fallback for unverified domains
+    // The user requested full response logging and returning
+    const { data, error } = await resend.emails.send({
+      from: 'onboarding@resend.dev',
       to: 'vikramsingh14052008@gmail.com',
       subject: `New Contact Form: ${subject}`,
       replyTo: email,
@@ -63,35 +63,35 @@ export async function POST(request: Request) {
       `,
     });
 
-    console.log('Full Resend Response:', JSON.stringify(resendResponse, null, 2));
+    console.log('Resend Data:', data);
+    console.log('Resend Error:', error);
 
-    if (resendResponse.error) {
-      // Return success: false with the specific Resend error message
+    if (error) {
       return NextResponse.json({
         success: false,
-        error: `Resend Error: ${resendResponse.error.message}`,
-        resendError: resendResponse.error
+        error: `Resend Error: ${error.message}`,
+        details: error
       }, { status: 400 });
     }
 
-    if (resendResponse.data?.id) {
+    if (data?.id) {
       return NextResponse.json({
         success: true,
-        messageId: resendResponse.data.id
+        messageId: data.id
       });
     }
 
     return NextResponse.json({
       success: false,
-      error: 'Resend returned an empty response without an ID or error.',
-      resendResponse
+      error: 'Resend response missing ID and error.',
+      data
     }, { status: 500 });
 
   } catch (error: any) {
     console.error('API Catch Error:', error);
     return NextResponse.json({ 
       success: false, 
-      error: error.message || 'An unexpected error occurred in the API route.'
+      error: error.message || 'An unexpected error occurred.'
     }, { status: 500 });
   }
 }
