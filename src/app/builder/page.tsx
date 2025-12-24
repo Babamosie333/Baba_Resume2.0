@@ -554,24 +554,30 @@ import { useLanguage } from "@/components/language-provider";
   );
 }
 
-function ResumePreview({ data, templateId, isPrint = false }: { data: ResumeData, templateId: string, isPrint?: boolean }) {
-  const { t } = useLanguage();
-  
-  const containerClass = `bg-white aspect-[1/1.414] shadow-xl overflow-hidden transition-all text-black resume-container ${
-    isPrint ? "w-full p-12" : "rounded-xl border border-zinc-200 dark:border-zinc-800 p-12"
-  }`;
+  function ResumePreview({ data, templateId, isPrint = false }: { data: ResumeData, templateId: string, isPrint?: boolean }) {
+    const { t } = useLanguage();
+    
+    const containerClass = `bg-white aspect-[1/1.414] shadow-xl overflow-hidden transition-all text-black resume-container ${
+      isPrint ? "w-full p-12" : "rounded-xl border border-zinc-200 dark:border-zinc-800 p-12"
+    }`;
 
-  if (templateId === "minimal") {
-    return (
-      <div className={containerClass}>
-        <div className="border-b-2 border-black pb-4 mb-6">
-          <h1 className="text-4xl font-light tracking-widest uppercase mb-1">{data.personalInfo.fullName || "YOUR NAME"}</h1>
-          <div className="flex flex-wrap gap-4 text-[10px] uppercase tracking-wider font-bold text-zinc-500">
-            {data.personalInfo.email && <span>{data.personalInfo.email}</span>}
-            {data.personalInfo.phone && <span>{data.personalInfo.phone}</span>}
-            {data.personalInfo.location && <span>{data.personalInfo.location}</span>}
+    if (templateId === "minimal") {
+      return (
+        <div className={containerClass}>
+          <div className="flex justify-between border-b-2 border-black pb-4 mb-6">
+            <div>
+              <h1 className="text-4xl font-light tracking-widest uppercase mb-1">{data.personalInfo.fullName || "YOUR NAME"}</h1>
+              <div className="flex flex-wrap gap-4 text-[10px] uppercase tracking-wider font-bold text-zinc-500">
+                {data.personalInfo.email && <span>{data.personalInfo.email}</span>}
+                {data.personalInfo.phone && <span>{data.personalInfo.phone}</span>}
+                {data.personalInfo.location && <span>{data.personalInfo.location}</span>}
+              </div>
+              {data.personalInfo.availability && <div className="text-[10px] uppercase tracking-wider font-bold text-zinc-400 mt-1">Available: {data.personalInfo.availability}</div>}
+            </div>
+            {data.personalInfo.photo && (
+              <img src={data.personalInfo.photo} alt="Profile" className="w-20 h-20 object-cover rounded-lg border border-black" />
+            )}
           </div>
-        </div>
         
         {data.personalInfo.summary && (
           <div className="mb-6">
