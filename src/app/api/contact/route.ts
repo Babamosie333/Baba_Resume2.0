@@ -2,18 +2,10 @@ import { Resend } from 'resend';
 import { NextResponse } from 'next/server';
 import { z } from 'zod';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
-const contactSchema = z.object({
-  firstName: z.string().min(1, 'First name is required').max(100),
-  lastName: z.string().min(1, 'Last name is required').max(100),
-  email: z.string().email('Invalid email address'),
-  subject: z.string().min(1, 'Subject is required').max(100),
-  message: z.string().min(1, 'Message is required').max(2000),
-});
-
 export async function POST(request: Request) {
   try {
+    const apiKey = process.env.RESEND_API_KEY;
+    
     const body = await request.json();
     console.log('Contact form body:', body);
 
@@ -38,7 +30,17 @@ export async function POST(request: Request) {
       );
     }
 
+    if (!apiKey) {
+      console.error('RESEND_API_KEY is missing');
+      return NextResponse.json(
+        { success: false, error: 'Email service is not configured (missing API key)' },
+        { status: 500 }
+      );
+    }
+
+    const resend = new Resend(apiKey);
     const { firstName, lastName, email, subject, message } = result.data;
+
 
     const { data, error } = await resend.emails.send({
       from: 'Contact Form <onboarding@resend.dev>',
