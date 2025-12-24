@@ -2,9 +2,26 @@
 
 import Navbar from "@/components/sections/navbar";
 import Footer from "@/components/sections/footer";
-import { Mail, MessageSquare, Phone, MapPin, Send } from "lucide-react";
+import { Mail, Phone, MapPin, Send } from "lucide-react";
+import { useLanguage } from "@/components/language-provider";
+import { useState } from "react";
 
 export default function ContactPage() {
+  const { t } = useLanguage();
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    subject: "General Inquiry",
+    message: ""
+  });
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const mailtoLink = `mailto:vikramsingh14052006@gmail.com?subject=${formData.subject}&body=Name: ${formData.firstName} ${formData.lastName}%0D%0AEmail: ${formData.email}%0D%0A%0D%0AMessage: ${formData.message}`;
+    window.location.href = mailtoLink;
+  };
+
   return (
     <div className="min-h-screen bg-white dark:bg-zinc-950 transition-colors duration-200">
       <Navbar />
@@ -13,10 +30,10 @@ export default function ContactPage() {
         <div className="max-w-[1200px] mx-auto">
           <div className="text-center mb-16">
             <h1 className="text-4xl md:text-5xl font-bold text-[#030712] dark:text-white mb-6 tracking-tight">
-              Get in Touch
+              {t("contact.title")}
             </h1>
             <p className="text-xl text-muted-foreground dark:text-zinc-400 max-w-2xl mx-auto leading-relaxed">
-              Have questions or feedback? We'd love to hear from you. Our team is here to help you build your perfect resume.
+              {t("contact.subtitle")}
             </p>
           </div>
 
@@ -27,19 +44,18 @@ export default function ContactPage() {
                   <Mail className="w-5 h-5" />
                 </div>
                 <div>
-                  <h3 className="font-bold text-[#030712] dark:text-white mb-1">Email Us</h3>
-                  <p className="text-sm text-zinc-600 dark:text-zinc-400">support@baba-resume.com</p>
-                  <p className="text-xs text-zinc-400 mt-1">We typically reply within 24 hours.</p>
+                  <h3 className="font-bold text-[#030712] dark:text-white mb-1">{t("contact.emailUs")}</h3>
+                  <p className="text-sm text-zinc-600 dark:text-zinc-400">{t("contact.emailDesc")}</p>
                 </div>
               </div>
 
               <div className="flex items-start gap-4 p-6 rounded-2xl bg-[#f8f9fb] dark:bg-zinc-900/50 border border-zinc-200 dark:border-zinc-800">
                 <div className="w-10 h-10 rounded-lg bg-black dark:bg-white text-white dark:text-black flex items-center justify-center flex-shrink-0">
-                  <MessageSquare className="w-5 h-5" />
+                  <Phone className="w-5 h-5" />
                 </div>
                 <div>
-                  <h3 className="font-bold text-[#030712] dark:text-white mb-1">Live Chat</h3>
-                  <p className="text-sm text-zinc-600 dark:text-zinc-400">Available Mon-Fri, 9am-6pm EST</p>
+                  <h3 className="font-bold text-[#030712] dark:text-white mb-1">{t("contact.phone")}</h3>
+                  <p className="text-sm text-zinc-600 dark:text-zinc-400">{t("contact.phoneDesc")}</p>
                 </div>
               </div>
 
@@ -48,27 +64,33 @@ export default function ContactPage() {
                   <MapPin className="w-5 h-5" />
                 </div>
                 <div>
-                  <h3 className="font-bold text-[#030712] dark:text-white mb-1">Office</h3>
-                  <p className="text-sm text-zinc-600 dark:text-zinc-400">123 Career Blvd, Suite 100<br />New York, NY 10001</p>
+                  <h3 className="font-bold text-[#030712] dark:text-white mb-1">{t("contact.location")}</h3>
+                  <p className="text-sm text-zinc-600 dark:text-zinc-400">{t("contact.locationDesc")}</p>
                 </div>
               </div>
             </div>
 
             <div className="lg:col-span-2">
-              <form className="p-8 md:p-10 rounded-3xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 shadow-xl space-y-6">
+              <form onSubmit={handleSubmit} className="p-8 md:p-10 rounded-3xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 shadow-xl space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-2">
-                    <label className="text-sm font-medium text-zinc-700 dark:text-zinc-300">First Name</label>
+                    <label className="text-sm font-medium text-zinc-700 dark:text-zinc-300">{t("contact.firstName")}</label>
                     <input 
                       type="text" 
+                      required
+                      value={formData.firstName}
+                      onChange={(e) => setFormData({...formData, firstName: e.target.value})}
                       className="w-full px-4 py-3 rounded-xl border border-zinc-200 dark:border-zinc-800 dark:bg-zinc-950 dark:text-white focus:ring-2 focus:ring-black/5 outline-none transition-all"
                       placeholder="John"
                     />
                   </div>
                   <div className="space-y-2">
-                    <label className="text-sm font-medium text-zinc-700 dark:text-zinc-300">Last Name</label>
+                    <label className="text-sm font-medium text-zinc-700 dark:text-zinc-300">{t("contact.lastName")}</label>
                     <input 
                       type="text" 
+                      required
+                      value={formData.lastName}
+                      onChange={(e) => setFormData({...formData, lastName: e.target.value})}
                       className="w-full px-4 py-3 rounded-xl border border-zinc-200 dark:border-zinc-800 dark:bg-zinc-950 dark:text-white focus:ring-2 focus:ring-black/5 outline-none transition-all"
                       placeholder="Doe"
                     />
@@ -76,17 +98,24 @@ export default function ContactPage() {
                 </div>
                 
                 <div className="space-y-2">
-                  <label className="text-sm font-medium text-zinc-700 dark:text-zinc-300">Email Address</label>
+                  <label className="text-sm font-medium text-zinc-700 dark:text-zinc-300">{t("contact.emailAddr")}</label>
                   <input 
                     type="email" 
+                    required
+                    value={formData.email}
+                    onChange={(e) => setFormData({...formData, email: e.target.value})}
                     className="w-full px-4 py-3 rounded-xl border border-zinc-200 dark:border-zinc-800 dark:bg-zinc-950 dark:text-white focus:ring-2 focus:ring-black/5 outline-none transition-all"
                     placeholder="john@example.com"
                   />
                 </div>
 
                 <div className="space-y-2">
-                  <label className="text-sm font-medium text-zinc-700 dark:text-zinc-300">Subject</label>
-                  <select className="w-full px-4 py-3 rounded-xl border border-zinc-200 dark:border-zinc-800 dark:bg-zinc-950 dark:text-white focus:ring-2 focus:ring-black/5 outline-none transition-all appearance-none">
+                  <label className="text-sm font-medium text-zinc-700 dark:text-zinc-300">{t("contact.subject")}</label>
+                  <select 
+                    value={formData.subject}
+                    onChange={(e) => setFormData({...formData, subject: e.target.value})}
+                    className="w-full px-4 py-3 rounded-xl border border-zinc-200 dark:border-zinc-800 dark:bg-zinc-950 dark:text-white focus:ring-2 focus:ring-black/5 outline-none transition-all appearance-none"
+                  >
                     <option>General Inquiry</option>
                     <option>Technical Support</option>
                     <option>Billing Question</option>
@@ -95,17 +124,20 @@ export default function ContactPage() {
                 </div>
 
                 <div className="space-y-2">
-                  <label className="text-sm font-medium text-zinc-700 dark:text-zinc-300">Message</label>
+                  <label className="text-sm font-medium text-zinc-700 dark:text-zinc-300">{t("contact.message")}</label>
                   <textarea 
                     rows={5}
+                    required
+                    value={formData.message}
+                    onChange={(e) => setFormData({...formData, message: e.target.value})}
                     className="w-full px-4 py-3 rounded-xl border border-zinc-200 dark:border-zinc-800 dark:bg-zinc-950 dark:text-white focus:ring-2 focus:ring-black/5 outline-none transition-all resize-none"
                     placeholder="How can we help you?"
                   />
                 </div>
 
-                <button className="w-full bg-black dark:bg-white text-white dark:text-black py-4 rounded-xl font-bold flex items-center justify-center gap-2 hover:opacity-90 transition-all active:scale-[0.98] shadow-lg">
+                <button type="submit" className="w-full bg-black dark:bg-white text-white dark:text-black py-4 rounded-xl font-bold flex items-center justify-center gap-2 hover:opacity-90 transition-all active:scale-[0.98] shadow-lg">
                   <Send className="w-4 h-4" />
-                  Send Message
+                  {t("contact.send")}
                 </button>
               </form>
             </div>
