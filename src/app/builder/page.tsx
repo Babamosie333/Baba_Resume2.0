@@ -214,6 +214,24 @@ import { useLanguage } from "@/components/language-provider";
               </div>
             </div>
             <div className="flex items-center gap-3">
+              <div className="flex items-center gap-1 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-lg p-1 mr-2">
+                <button 
+                  onClick={() => setFontSize(prev => Math.max(0.7, prev - 0.05))}
+                  className="p-1.5 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded text-zinc-500"
+                  title="Decrease Font Size"
+                >
+                  <span className="text-xs font-bold">A-</span>
+                </button>
+                <div className="w-[1px] h-4 bg-zinc-200 dark:bg-zinc-800" />
+                <button 
+                  onClick={() => setFontSize(prev => Math.min(1.3, prev + 0.05))}
+                  className="p-1.5 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded text-zinc-500"
+                  title="Increase Font Size"
+                >
+                  <span className="text-sm font-bold">A+</span>
+                </button>
+              </div>
+
               <div className="flex items-center gap-1 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-lg p-1 mr-4">
                 {["modern", "minimal", "creative"].map((tId) => (
                   <button
