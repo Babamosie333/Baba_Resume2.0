@@ -333,7 +333,7 @@ function BuilderContent() {
                             type="text" 
                             value={proj.link}
                             onChange={(e) => handleListChange('projects', index, 'link', e.target.value)}
-                            placeholder="https://..."
+                            placeholder="https://github.com/..."
                             className="w-full px-3 py-2 rounded-lg border border-zinc-200 dark:border-zinc-800 dark:bg-zinc-950 dark:text-white focus:outline-none focus:ring-2 focus:ring-black/5"
                           />
                         </div>
@@ -343,7 +343,7 @@ function BuilderContent() {
                         <textarea 
                           value={proj.description}
                           onChange={(e) => handleListChange('projects', index, 'description', e.target.value)}
-                          placeholder="Describe the project..."
+                          placeholder="Describe the project achievements and tech stack..."
                           className="w-full px-3 py-2 rounded-lg border border-zinc-200 dark:border-zinc-800 dark:bg-zinc-950 dark:text-white focus:outline-none focus:ring-2 focus:ring-black/5 h-20 resize-none"
                         />
                       </div>
