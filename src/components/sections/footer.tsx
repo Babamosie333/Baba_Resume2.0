@@ -22,14 +22,15 @@ const Footer = () => {
               {t("hero.subtitle").substring(0, 60)}...
             </p>
           </div>
-          <div>
-            <h4 className="font-semibold mb-4 text-[#030712] dark:text-white">Product</h4>
-            <ul className="space-y-2 text-sm text-muted-foreground dark:text-zinc-400">
-              <li><Link href="/builder" className="hover:text-black dark:hover:text-white transition-colors">{t("nav.builder")}</Link></li>
-              <li><Link href="/templates" className="hover:text-black dark:hover:text-white transition-colors">{t("nav.templates")}</Link></li>
-              <li><Link href="/pricing" className="hover:text-black dark:hover:text-white transition-colors">{t("nav.pricing")}</Link></li>
-            </ul>
-          </div>
+            <div>
+              <h4 className="font-semibold mb-4 text-[#030712] dark:text-white">Product</h4>
+              <ul className="space-y-2 text-sm text-muted-foreground dark:text-zinc-400">
+                <li><Link href="/builder" className="hover:text-black dark:hover:text-white transition-colors">{t("nav.builder")}</Link></li>
+                <li><Link href="/templates" className="hover:text-black dark:hover:text-white transition-colors">{t("nav.templates")}</Link></li>
+                <li><Link href="/pricing" className="hover:text-black dark:hover:text-white transition-colors">{t("nav.pricing")}</Link></li>
+                <li><a href="https://github.com/Babamosie333/Baba_Resume2.0.git" target="_blank" rel="noopener noreferrer" className="hover:text-black dark:hover:text-white transition-colors">GitHub</a></li>
+              </ul>
+            </div>
           <div>
             <h4 className="font-semibold mb-4 text-[#030712] dark:text-white">Company</h4>
             <ul className="space-y-2 text-sm text-muted-foreground dark:text-zinc-400">
