@@ -106,6 +106,7 @@ import { useLanguage } from "@/components/language-provider";
 
     const [mounted, setMounted] = useState(false);
     const [githubStats, setGithubStats] = useState<{intensities: number[], contributions: number[]} | null>(null);
+    const [fontSize, setFontSize] = useState(1); // Scale factor
 
     useEffect(() => {
       setMounted(true);
