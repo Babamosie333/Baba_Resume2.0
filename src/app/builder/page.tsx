@@ -202,58 +202,91 @@ import { useLanguage } from "@/components/language-provider";
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             {/* Editor Side */}
             <div className="space-y-6 max-h-[calc(100vh-200px)] overflow-y-auto pr-2 custom-scrollbar">
-              {/* Personal Info */}
-              <section className="bg-white dark:bg-zinc-900 p-6 rounded-xl border border-zinc-200 dark:border-zinc-800 shadow-sm">
-                <div className="flex items-center gap-2 mb-4">
-                  <User className="w-5 h-5 text-zinc-500" />
-                  <h2 className="font-bold text-lg dark:text-white">{t("builder.personalInfo")}</h2>
-                </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
-                  <div className="space-y-1">
-                    <label className="text-xs font-bold uppercase text-zinc-400">{t("builder.fullName")}</label>
-                    <input 
-                      type="text" 
-                      name="fullName"
-                      value={data.personalInfo.fullName}
-                      onChange={handlePersonalInfoChange}
-                      placeholder="John Doe"
-                      className="w-full px-3 py-2 rounded-lg border border-zinc-200 dark:border-zinc-800 dark:bg-zinc-950 dark:text-white focus:outline-none focus:ring-2 focus:ring-black/5"
-                    />
+                {/* Personal Info */}
+                <section className="bg-white dark:bg-zinc-900 p-6 rounded-xl border border-zinc-200 dark:border-zinc-800 shadow-sm">
+                  <div className="flex items-center gap-2 mb-4">
+                    <User className="w-5 h-5 text-zinc-500" />
+                    <h2 className="font-bold text-lg dark:text-white">{t("builder.personalInfo")}</h2>
                   </div>
-                  <div className="space-y-1">
-                    <label className="text-xs font-bold uppercase text-zinc-400">{t("builder.email")}</label>
-                    <input 
-                      type="email" 
-                      name="email"
-                      value={data.personalInfo.email}
-                      onChange={handlePersonalInfoChange}
-                      placeholder="john@example.com"
-                      className="w-full px-3 py-2 rounded-lg border border-zinc-200 dark:border-zinc-800 dark:bg-zinc-950 dark:text-white focus:outline-none focus:ring-2 focus:ring-black/5"
-                    />
+                  
+                  <div className="flex items-center gap-6 mb-6">
+                    <div className="relative w-24 h-24 rounded-xl bg-zinc-100 dark:bg-zinc-800 border-2 border-dashed border-zinc-300 dark:border-zinc-700 overflow-hidden group">
+                      {data.personalInfo.photo ? (
+                        <img src={data.personalInfo.photo} alt="Profile" className="w-full h-full object-cover" />
+                      ) : (
+                        <div className="w-full h-full flex flex-col items-center justify-center text-zinc-400">
+                          <Plus className="w-6 h-6 mb-1" />
+                          <span className="text-[10px] font-bold uppercase">Photo</span>
+                        </div>
+                      )}
+                      <input 
+                        type="file" 
+                        accept="image/*"
+                        onChange={handlePhotoUpload}
+                        className="absolute inset-0 opacity-0 cursor-pointer z-10"
+                      />
+                    </div>
+                    <div className="flex-1 space-y-4">
+                      <div className="space-y-1">
+                        <label className="text-xs font-bold uppercase text-zinc-400">{t("builder.fullName")}</label>
+                        <input 
+                          type="text" 
+                          name="fullName"
+                          value={data.personalInfo.fullName}
+                          onChange={handlePersonalInfoChange}
+                          placeholder="John Doe"
+                          className="w-full px-3 py-2 rounded-lg border border-zinc-200 dark:border-zinc-800 dark:bg-zinc-950 dark:text-white focus:outline-none focus:ring-2 focus:ring-black/5"
+                        />
+                      </div>
+                      <div className="space-y-1">
+                        <label className="text-xs font-bold uppercase text-zinc-400">Working Days / Availability</label>
+                        <input 
+                          type="text" 
+                          name="availability"
+                          value={data.personalInfo.availability}
+                          onChange={handlePersonalInfoChange}
+                          placeholder="Mon - Fri, 9 AM - 6 PM"
+                          className="w-full px-3 py-2 rounded-lg border border-zinc-200 dark:border-zinc-800 dark:bg-zinc-950 dark:text-white focus:outline-none focus:ring-2 focus:ring-black/5"
+                        />
+                      </div>
+                    </div>
                   </div>
-                  <div className="space-y-1">
-                    <label className="text-xs font-bold uppercase text-zinc-400">{t("builder.phone")}</label>
-                    <input 
-                      type="text" 
-                      name="phone"
-                      value={data.personalInfo.phone}
-                      onChange={handlePersonalInfoChange}
-                      placeholder="+1 234 567 890"
-                      className="w-full px-3 py-2 rounded-lg border border-zinc-200 dark:border-zinc-800 dark:bg-zinc-950 dark:text-white focus:outline-none focus:ring-2 focus:ring-black/5"
-                    />
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+                    <div className="space-y-1">
+                      <label className="text-xs font-bold uppercase text-zinc-400">{t("builder.email")}</label>
+                      <input 
+                        type="email" 
+                        name="email"
+                        value={data.personalInfo.email}
+                        onChange={handlePersonalInfoChange}
+                        placeholder="john@example.com"
+                        className="w-full px-3 py-2 rounded-lg border border-zinc-200 dark:border-zinc-800 dark:bg-zinc-950 dark:text-white focus:outline-none focus:ring-2 focus:ring-black/5"
+                      />
+                    </div>
+                    <div className="space-y-1">
+                      <label className="text-xs font-bold uppercase text-zinc-400">{t("builder.phone")}</label>
+                      <input 
+                        type="text" 
+                        name="phone"
+                        value={data.personalInfo.phone}
+                        onChange={handlePersonalInfoChange}
+                        placeholder="+1 234 567 890"
+                        className="w-full px-3 py-2 rounded-lg border border-zinc-200 dark:border-zinc-800 dark:bg-zinc-950 dark:text-white focus:outline-none focus:ring-2 focus:ring-black/5"
+                      />
+                    </div>
+                    <div className="space-y-1">
+                      <label className="text-xs font-bold uppercase text-zinc-400">{t("builder.location")}</label>
+                      <input 
+                        type="text" 
+                        name="location"
+                        value={data.personalInfo.location}
+                        onChange={handlePersonalInfoChange}
+                        placeholder="New York, USA"
+                        className="w-full px-3 py-2 rounded-lg border border-zinc-200 dark:border-zinc-800 dark:bg-zinc-950 dark:text-white focus:outline-none focus:ring-2 focus:ring-black/5"
+                      />
+                    </div>
                   </div>
-                  <div className="space-y-1">
-                    <label className="text-xs font-bold uppercase text-zinc-400">{t("builder.location")}</label>
-                    <input 
-                      type="text" 
-                      name="location"
-                      value={data.personalInfo.location}
-                      onChange={handlePersonalInfoChange}
-                      placeholder="New York, USA"
-                      className="w-full px-3 py-2 rounded-lg border border-zinc-200 dark:border-zinc-800 dark:bg-zinc-950 dark:text-white focus:outline-none focus:ring-2 focus:ring-black/5"
-                    />
-                  </div>
-                </div>
                 <div className="space-y-1">
                   <label className="text-xs font-bold uppercase text-zinc-400">Professional Summary</label>
                   <textarea 
