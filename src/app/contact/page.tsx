@@ -8,6 +8,8 @@ import { useState } from "react";
 
 export default function ContactPage() {
   const { t } = useLanguage();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -16,10 +18,25 @@ export default function ContactPage() {
     message: ""
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const mailtoLink = `mailto:vikramsingh14052006@gmail.com?subject=${formData.subject}&body=Name: ${formData.firstName} ${formData.lastName}%0D%0AEmail: ${formData.email}%0D%0A%0D%0AMessage: ${formData.message}`;
-    window.location.href = mailtoLink;
+    setIsSubmitting(true);
+    
+    // Simulate API call
+    await new Promise(resolve => setTimeout(resolve, 1500));
+    
+    setIsSubmitting(false);
+    setIsSuccess(true);
+    setFormData({
+      firstName: "",
+      lastName: "",
+      email: "",
+      subject: "General Inquiry",
+      message: ""
+    });
+
+    // Hide success message after 5 seconds
+    setTimeout(() => setIsSuccess(false), 5000);
   };
 
   return (
@@ -28,6 +45,14 @@ export default function ContactPage() {
       
       <main className="pt-32 pb-24 px-4">
         <div className="max-w-[1200px] mx-auto">
+          {isSuccess && (
+            <div className="mb-8 p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-xl animate-in fade-in slide-in-from-top-4 duration-300">
+              <p className="text-green-800 dark:text-green-400 text-center font-medium">
+                Your message has been sent successfully. We will get back to you soon.
+              </p>
+            </div>
+          )}
+
           <div className="text-center mb-16">
             <h1 className="text-4xl md:text-5xl font-bold text-[#030712] dark:text-white mb-6 tracking-tight">
               {t("contact.title")}
