@@ -554,7 +554,7 @@ import { useLanguage } from "@/components/language-provider";
                           placeholder={t("builder.skillPlaceholder")}
                           className="w-full px-3 py-2 rounded-lg border border-zinc-200 dark:border-zinc-800 dark:bg-zinc-950 dark:text-white focus:outline-none focus:ring-2 focus:ring-black/5 text-sm"
                         />
-                        <button onClick={() => removeItem('skills', index)} className="absolute right-2 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-red-500 opacity-0 group-hover:opacity-100"><Trash2 className="w-3 h-3"/></button>
+                        <button onClick={() => removeItem('skills', index)} className="absolute right-2 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-red-500 opacity-0 group-hover:opacity-100 transition-opacity"><Trash2 className="w-3 h-3"/></button>
                       </div>
                     ))}
                   </div>
@@ -580,7 +580,7 @@ import { useLanguage } from "@/components/language-provider";
                           placeholder={t("builder.languagePlaceholder")}
                           className="w-full px-3 py-2 rounded-lg border border-zinc-200 dark:border-zinc-800 dark:bg-zinc-950 dark:text-white focus:outline-none focus:ring-2 focus:ring-black/5 text-sm"
                         />
-                        <button onClick={() => removeItem('languages', index)} className="absolute right-2 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-red-500 opacity-0 group-hover:opacity-100"><Trash2 className="w-3 h-3"/></button>
+                        <button onClick={() => removeItem('languages', index)} className="absolute right-2 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-red-500 opacity-0 group-hover:opacity-100 transition-opacity"><Trash2 className="w-3 h-3"/></button>
                       </div>
                     ))}
                   </div>
