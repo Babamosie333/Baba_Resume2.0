@@ -49,6 +49,14 @@ const translations: Record<Language, Record<string, string>> = {
     "builder.addEducation": "Add Education",
     "builder.addSkill": "Add Skill",
     "builder.preview": "Resume Preview",
+    "templates.title": "Choose Your Template",
+    "templates.subtitle": "Our professionally designed templates are tested to pass ATS systems and impress recruiters.",
+    "templates.useThis": "Use This",
+    "pricing.title": "Simple, Transparent Pricing",
+    "pricing.subtitle": "Choose the plan that's right for your career stage.",
+    "pricing.free": "Free",
+    "pricing.pro": "Pro",
+    "pricing.enterprise": "Enterprise",
   },
   hi: {
     "nav.getStarted": "शुरू करें",
@@ -88,6 +96,14 @@ const translations: Record<Language, Record<string, string>> = {
     "builder.addEducation": "शिक्षा जोड़ें",
     "builder.addSkill": "कौशल जोड़ें",
     "builder.preview": "रिज्यूमे पूर्वावलोकन",
+    "templates.title": "अपना टेम्प्लेट चुनें",
+    "templates.subtitle": "हमारे पेशेवर रूप से डिज़ाइन किए गए टेम्प्लेट भर्तीकर्ताओं को प्रभावित करने के लिए परीक्षण किए गए हैं।",
+    "templates.useThis": "इसका उपयोग करें",
+    "pricing.title": "सरल, पारदर्शी मूल्य निर्धारण",
+    "pricing.subtitle": "अपने करियर के चरण के लिए सही योजना चुनें।",
+    "pricing.free": "निःशुल्क",
+    "pricing.pro": "प्रो",
+    "pricing.enterprise": "एंटरप्राइज",
   },
 }
 
@@ -95,13 +111,31 @@ const LanguageContext = createContext<LanguageContextType | undefined>(undefined
 
 export function LanguageProvider({ children }: { children: React.ReactNode }) {
   const [language, setLanguage] = useState<Language>("en")
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    const saved = localStorage.getItem("language") as Language
+    if (saved && (saved === "en" || saved === "hi")) {
+      setLanguage(saved)
+    }
+    setMounted(true)
+  }, [])
+
+  const handleSetLanguage = (lang: Language) => {
+    setLanguage(lang)
+    localStorage.setItem("language", lang)
+  }
 
   const t = (key: string) => {
     return translations[language][key] || key
   }
 
+  if (!mounted) {
+    return <>{children}</>
+  }
+
   return (
-    <LanguageContext.Provider value={{ language, setLanguage, t }}>
+    <LanguageContext.Provider value={{ language, setLanguage: handleSetLanguage, t }}>
       {children}
     </LanguageContext.Provider>
   )
