@@ -66,9 +66,6 @@ export default function Navbar() {
               <Link href="/templates" className="text-sm font-medium text-zinc-600 dark:text-zinc-400 hover:text-black dark:hover:text-white transition-colors uppercase tracking-wide">
                 {t("nav.templates")}
               </Link>
-              <Link href="/pricing" className="text-sm font-medium text-zinc-600 dark:text-zinc-400 hover:text-black dark:hover:text-white transition-colors uppercase tracking-wide">
-                {t("nav.pricing")}
-              </Link>
               <Link href="/about" className="text-sm font-medium text-zinc-600 dark:text-zinc-400 hover:text-black dark:hover:text-white transition-colors uppercase tracking-wide">
                 {t("nav.about")}
               </Link>
