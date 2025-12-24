@@ -97,10 +97,11 @@ export default function Navbar() {
               
               <div className="relative z-10 flex items-center gap-2">
                 <Star className="h-4 w-4 text-yellow-500 fill-yellow-500/20" />
-                <span className="text-sm font-medium text-zinc-700 dark:text-zinc-300">{t("nav.starOnGithub")}</span>
-                <span className="w-px h-3 bg-zinc-300 dark:bg-zinc-700"></span>
-                <span className="text-sm tabular-nums text-zinc-900 dark:text-white font-semibold">2,811</span>
-              </div>
+                  <span className="text-sm font-medium text-zinc-700 dark:text-zinc-300">{t("nav.starOnGithub")}</span>
+                  <span className="w-px h-3 bg-zinc-300 dark:bg-zinc-700"></span>
+                  <span className="text-sm tabular-nums text-zinc-900 dark:text-white font-semibold">{starCount}</span>
+                </div>
+
             </a>
 
             {/* CTA Button */}
