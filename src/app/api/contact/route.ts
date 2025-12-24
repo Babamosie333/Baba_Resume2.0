@@ -45,7 +45,18 @@ export async function POST(request: Request) {
 
     const { firstName, lastName, email, subject, message } = result.data;
     const apiKey = process.env.RESEND_API_KEY;
+    const envStatus = apiKey ? 'present' : 'missing';
 
+    console.log('API Key Status:', envStatus);
+
+    // TEMPORARY: Return envStatus without sending email for debugging
+    return NextResponse.json({ 
+      success: true, 
+      message: 'Debug: Checking environment status',
+      envStatus
+    });
+
+    /* Commenting out actual send logic for Step 1
     if (!apiKey) {
       console.error('CRITICAL: RESEND_API_KEY is missing');
       // For testing purposes, if it's missing we log it but return a generic error to user
