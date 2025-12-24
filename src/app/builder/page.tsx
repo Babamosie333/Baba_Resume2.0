@@ -783,11 +783,12 @@ function ResumePreview({ data, templateId, fontSize = 1, githubStats, mounted, i
     );
   }
 
-  if (templateId === "creative") {
-    return (
-      <div className={containerClass} style={containerStyle}>
-        <div className="grid grid-cols-3 gap-8 h-full">
-          <div className="bg-zinc-50 -m-12 p-12 pt-20">
+    if (templateId === "creative") {
+      return (
+        <div className={containerClass} style={containerStyle}>
+          <div className="grid grid-cols-3 gap-8 min-h-full">
+            <div className="bg-zinc-50 -m-12 p-12 pt-20 min-h-full">
+
             {data.personalInfo.photo && (
               <img src={data.personalInfo.photo} alt="Profile" className="w-full aspect-square object-cover rounded-xl mb-6 border-2 border-white shadow-sm" />
             )}
