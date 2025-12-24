@@ -16,7 +16,6 @@ const translations: Record<Language, Record<string, string>> = {
     "nav.starOnGithub": "Star on GitHub",
     "nav.builder": "Builder",
     "nav.templates": "Templates",
-    "nav.pricing": "Pricing",
     "nav.about": "About",
     "nav.contact": "Contact",
     "hero.badge": "Smart Resume Creation",
