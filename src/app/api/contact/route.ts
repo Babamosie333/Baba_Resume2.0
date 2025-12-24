@@ -47,7 +47,6 @@ export async function POST(request: Request) {
       envStatus
     });
 
-    // The rest of the logic is temporarily disabled for debugging
     /*
     if (!apiKey) {
       console.error('CRITICAL: RESEND_API_KEY is missing');
