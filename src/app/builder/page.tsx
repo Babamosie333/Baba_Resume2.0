@@ -52,27 +52,55 @@ import { useLanguage } from "@/components/language-provider";
         fullName: "Vikram Singh", 
         email: "vikramsingh14052006@gmail.com", 
         phone: "+91 8081477034", 
-        location: "Kanpur, India", 
-        summary: "Passionate software developer with experience in building modern web applications. Focused on creating efficient and user-friendly solutions.",
-        availability: "Mon - Fri, 9 AM - 6 PM"
+        location: "Kanpur, Uttar Pradesh, India", 
+        summary: "Passionate software developer focusing on Web Development and Python projects. Experience in building responsive websites and implementing AI/ML models using Python. Skilled in both frontend and backend technologies with a strong foundation in data structures and algorithms.",
+        availability: "Available"
       },
-      experience: [{ 
-        company: "Baba_Resume2.0", 
-        role: "Lead Developer", 
-        duration: "Jan 2024 - Present", 
-        description: "Leading the development of a smart AI resume builder. Implemented multilingual support and real-time preview features." 
-      }],
-      education: [{ 
-        school: "Example University", 
-        degree: "Bachelor of Science in Computer Science", 
-        year: "2020 - 2024" 
-      }],
-      projects: [{ 
-        name: "Magic Resume", 
-        link: "https://github.com/Babamosie333/Baba_Resume2.0", 
-        description: "A professional resume builder with AI detection and advice features." 
-      }],
-      skills: ["React", "Next.js", "TypeScript", "Tailwind CSS"],
+      experience: [
+        { 
+          company: "Web Development Training", 
+          role: "Trainee Web Developer", 
+          duration: "Nov 2024 - Dec 2024", 
+          description: "Participating in a collage Web development training program focused on building responsive websites using HTML5, CSS3, Bootstrap and basic JavaScript. Creating multi-page layout and forms, improving understanding of page structure, styling and basic interactivity." 
+        },
+        { 
+          company: "AI & ML Training", 
+          role: "Trainee ML Engineer", 
+          duration: "Aug 2023 - June 2025", 
+          description: "Completed college training on artificial intelligence and machine learning using Python. Implemented simple models, regression classification with data, pre-processing and evaluation in Jupyter notebook, using libraries like Pandas, NumPy and Scikit-learn." 
+        },
+        { 
+          company: "Django & Flask Training", 
+          role: "Trainee Backend Developer", 
+          duration: "Nov 2025 - Dec 2025", 
+          description: "Attendant college training on Django and Flask framework for Python web development. Build basic CRUD web applications connected to a database, practising URL routing, templates, and deployment of simple demo projects." 
+        }
+      ],
+      education: [
+        { 
+          school: "Dr. Virendra Swaroop Institute of Computer Studies", 
+          degree: "Bachelor of Computer Application (BCA)", 
+          year: "2024 - 2027" 
+        },
+        { 
+          school: "Guru Nanak Public School", 
+          degree: "Intermediate (Computer Science)", 
+          year: "2023 - 2024" 
+        }
+      ],
+      projects: [
+        { 
+          name: "Magic Resume", 
+          link: "https://github.com/Babamosie333/Baba_Resume2.0", 
+          description: "A professional resume builder with AI detection and advice features. Implemented multilingual support and real-time preview features." 
+        },
+        { 
+          name: "EasyFolio", 
+          link: "https://babamosie333.github.io/EasyFolio/", 
+          description: "A web development project focused on building responsive websites using modern web technologies. Improving understanding of page structure and styling." 
+        }
+      ],
+      skills: ["HTML5", "CSS3", "JavaScript", "Python", "Django", "MySQL", "Pandas", "NumPy", "Scikit-learn", "Git"],
       languages: ["English", "Hindi"],
     });
 
