@@ -213,7 +213,6 @@ export default function ContactPage() {
                   >
                     <option>General Inquiry</option>
                     <option>Technical Support</option>
-                    <option>Billing Question</option>
                     <option>Partnership Proposal</option>
                   </select>
                   {errors.subject && <p className="text-xs text-red-500 mt-1">{errors.subject}</p>}
