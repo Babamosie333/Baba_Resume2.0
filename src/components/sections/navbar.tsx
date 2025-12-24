@@ -24,7 +24,7 @@ export default function Navbar() {
       fetch("https://api.github.com/repos/Babamosie333/Baba_Resume2.0")
         .then(res => res.json())
         .then(data => {
-          if (data.stargazers_count) {
+          if (data.stargazers_count !== undefined) {
             setStarCount(data.stargazers_count.toLocaleString());
           }
         })
