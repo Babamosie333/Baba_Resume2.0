@@ -108,13 +108,16 @@ import { useLanguage } from "@/components/language-provider";
     const [githubStats, setGithubStats] = useState<{intensities: number[], contributions: number[]} | null>(null);
     const [fontSize, setFontSize] = useState(1); // Scale factor
 
-    useEffect(() => {
-      setMounted(true);
-      // Generate static random values for GitHub graph to avoid hydration mismatch
-      const intensities = Array.from({ length: 40 }, () => Math.floor(Math.random() * 5));
-      const contributions = Array.from({ length: 40 }, () => Math.floor(Math.random() * 10));
-      setGithubStats({ intensities, contributions });
-    }, []);
+      useEffect(() => {
+        setMounted(true);
+        const template = searchParams.get("template");
+        if (template) setTemplateId(template);
+        
+        // Generate static random values for GitHub graph to avoid hydration mismatch
+        const intensities = Array.from({ length: 40 }, () => Math.floor(Math.random() * 5));
+        const contributions = Array.from({ length: 40 }, () => Math.floor(Math.random() * 10));
+        setGithubStats({ intensities, contributions });
+      }, [searchParams]);
 
     const handlePhotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
       const file = e.target.files?.[0];
