@@ -71,13 +71,13 @@ const HeroSection = () => {
                 <div className="absolute inset-0 bg-gradient-to-tr from-black/5 via-blue-500/5 to-purple-500/5 rounded-2xl blur-xl"></div>
                 
                 <div className="relative w-full h-full">
-                  <Image
-                    src="https://slelguoygbfzlpylpxfs.supabase.co/storage/v1/object/public/test-clones/77ba5549-92dc-4b2e-a2cb-758e9202b940-magicv-art/assets/images/images_1.png"
-                    alt="Resume Editor Preview"
-                    fill
-                    priority
-                    className="object-contain object-center drop-shadow-2xl dark:invert dark:hue-rotate-180"
-                  />
+                    <Image
+                      src="https://slelguoygbfzlpylpxfs.supabase.co/storage/v1/object/public/test-clones/77ba5549-92dc-4b2e-a2cb-758e9202b940-magicv-art/assets/images/images_1.png"
+                      alt="Resume Editor Preview"
+                      fill
+                      priority
+                      className="object-contain object-center drop-shadow-2xl"
+                    />
                 </div>
               </div>
             </div>
