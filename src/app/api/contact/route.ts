@@ -36,9 +36,13 @@ export async function POST(request: Request) {
     const apiKey = process.env.RESEND_API_KEY;
 
     if (!apiKey) {
-      console.error('RESEND_API_KEY is missing');
+      console.error('RESEND_API_KEY is missing. Available keys:', Object.keys(process.env));
       return NextResponse.json(
-        { success: false, error: 'RESEND_API_KEY is missing from environment' },
+        { 
+          success: false, 
+          error: 'RESEND_API_KEY is missing from environment',
+          availableKeys: Object.keys(process.env).filter(k => !k.startsWith('npm_') && !k.startsWith('NODE_'))
+        },
         { status: 500 }
       );
     }
