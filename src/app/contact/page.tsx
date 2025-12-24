@@ -26,7 +26,7 @@ export default function ContactPage() {
     if (!formData.firstName.trim()) newErrors.firstName = "First name is required";
     if (!formData.lastName.trim()) newErrors.lastName = "Last name is required";
     
-    // Standard email validation
+    // Standard email validation - simple as requested
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!formData.email.trim()) {
       newErrors.email = "Email address is required";
@@ -70,13 +70,14 @@ export default function ContactPage() {
 
       const result = await response.json();
 
-      if (result.details) {
-        setErrors(result.details);
+      if (!response.ok) {
+        if (result.details) {
+          setErrors(result.details);
+        }
+        throw new Error(result.error || 'Failed to send message');
       }
-      throw new Error(result.error || 'Failed to send message');
-    }
-    
-    setIsSuccess(true);
+      
+      setIsSuccess(true);
       setFormData({
         firstName: "",
         lastName: "",
@@ -165,62 +166,78 @@ export default function ContactPage() {
                     <label className="text-sm font-medium text-zinc-700 dark:text-zinc-300">{t("contact.firstName")}</label>
                     <input 
                       type="text" 
-                      required
                       value={formData.firstName}
-                      onChange={(e) => setFormData({...formData, firstName: e.target.value})}
-                      className="w-full px-4 py-3 rounded-xl border border-zinc-200 dark:border-zinc-800 dark:bg-zinc-950 dark:text-white focus:ring-2 focus:ring-black/5 outline-none transition-all"
+                      onChange={(e) => {
+                        setFormData({...formData, firstName: e.target.value});
+                        if (errors.firstName) setErrors({...errors, firstName: ""});
+                      }}
+                      className={`w-full px-4 py-3 rounded-xl border ${errors.firstName ? 'border-red-500' : 'border-zinc-200 dark:border-zinc-800'} dark:bg-zinc-950 dark:text-white focus:ring-2 focus:ring-black/5 outline-none transition-all`}
                       placeholder="John"
                     />
+                    {errors.firstName && <p className="text-xs text-red-500 mt-1">{errors.firstName}</p>}
                   </div>
                   <div className="space-y-2">
                     <label className="text-sm font-medium text-zinc-700 dark:text-zinc-300">{t("contact.lastName")}</label>
                     <input 
                       type="text" 
-                      required
                       value={formData.lastName}
-                      onChange={(e) => setFormData({...formData, lastName: e.target.value})}
-                      className="w-full px-4 py-3 rounded-xl border border-zinc-200 dark:border-zinc-800 dark:bg-zinc-950 dark:text-white focus:ring-2 focus:ring-black/5 outline-none transition-all"
+                      onChange={(e) => {
+                        setFormData({...formData, lastName: e.target.value});
+                        if (errors.lastName) setErrors({...errors, lastName: ""});
+                      }}
+                      className={`w-full px-4 py-3 rounded-xl border ${errors.lastName ? 'border-red-500' : 'border-zinc-200 dark:border-zinc-800'} dark:bg-zinc-950 dark:text-white focus:ring-2 focus:ring-black/5 outline-none transition-all`}
                       placeholder="Doe"
                     />
+                    {errors.lastName && <p className="text-xs text-red-500 mt-1">{errors.lastName}</p>}
                   </div>
                 </div>
                 
                 <div className="space-y-2">
                   <label className="text-sm font-medium text-zinc-700 dark:text-zinc-300">{t("contact.emailAddr")}</label>
                   <input 
-                    type="email" 
-                    required
+                    type="text" 
                     value={formData.email}
-                    onChange={(e) => setFormData({...formData, email: e.target.value})}
-                    className="w-full px-4 py-3 rounded-xl border border-zinc-200 dark:border-zinc-800 dark:bg-zinc-950 dark:text-white focus:ring-2 focus:ring-black/5 outline-none transition-all"
+                    onChange={(e) => {
+                      setFormData({...formData, email: e.target.value});
+                      if (errors.email) setErrors({...errors, email: ""});
+                    }}
+                    className={`w-full px-4 py-3 rounded-xl border ${errors.email ? 'border-red-500' : 'border-zinc-200 dark:border-zinc-800'} dark:bg-zinc-950 dark:text-white focus:ring-2 focus:ring-black/5 outline-none transition-all`}
                     placeholder="john@example.com"
                   />
+                  {errors.email && <p className="text-xs text-red-500 mt-1">{errors.email}</p>}
                 </div>
 
                 <div className="space-y-2">
                   <label className="text-sm font-medium text-zinc-700 dark:text-zinc-300">{t("contact.subject")}</label>
                   <select 
                     value={formData.subject}
-                    onChange={(e) => setFormData({...formData, subject: e.target.value})}
-                    className="w-full px-4 py-3 rounded-xl border border-zinc-200 dark:border-zinc-800 dark:bg-zinc-950 dark:text-white focus:ring-2 focus:ring-black/5 outline-none transition-all appearance-none"
+                    onChange={(e) => {
+                      setFormData({...formData, subject: e.target.value});
+                      if (errors.subject) setErrors({...errors, subject: ""});
+                    }}
+                    className={`w-full px-4 py-3 rounded-xl border ${errors.subject ? 'border-red-500' : 'border-zinc-200 dark:border-zinc-800'} dark:bg-zinc-950 dark:text-white focus:ring-2 focus:ring-black/5 outline-none transition-all appearance-none`}
                   >
                     <option>General Inquiry</option>
                     <option>Technical Support</option>
                     <option>Billing Question</option>
                     <option>Partnership Proposal</option>
                   </select>
+                  {errors.subject && <p className="text-xs text-red-500 mt-1">{errors.subject}</p>}
                 </div>
 
                 <div className="space-y-2">
                   <label className="text-sm font-medium text-zinc-700 dark:text-zinc-300">{t("contact.message")}</label>
                   <textarea 
                     rows={5}
-                    required
                     value={formData.message}
-                    onChange={(e) => setFormData({...formData, message: e.target.value})}
-                    className="w-full px-4 py-3 rounded-xl border border-zinc-200 dark:border-zinc-800 dark:bg-zinc-950 dark:text-white focus:ring-2 focus:ring-black/5 outline-none transition-all resize-none"
+                    onChange={(e) => {
+                      setFormData({...formData, message: e.target.value});
+                      if (errors.message) setErrors({...errors, message: ""});
+                    }}
+                    className={`w-full px-4 py-3 rounded-xl border ${errors.message ? 'border-red-500' : 'border-zinc-200 dark:border-zinc-800'} dark:bg-zinc-950 dark:text-white focus:ring-2 focus:ring-black/5 outline-none transition-all resize-none`}
                     placeholder="How can we help you?"
                   />
+                  {errors.message && <p className="text-xs text-red-500 mt-1">{errors.message}</p>}
                 </div>
 
                 <button 
