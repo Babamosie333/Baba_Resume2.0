@@ -65,7 +65,7 @@ export default function Navbar() {
 
             {/* GitHub Star Button */}
             <a
-              href="https://github.com/JOYCEQL/magic-resume"
+              href="https://github.com/Babamosie333/Baba_Resume2.0.git"
               target="_blank"
               rel="noopener noreferrer"
               className="relative inline-flex items-center gap-2 h-8 px-3 rounded-full bg-white/50 backdrop-blur-md border border-zinc-200 hover:border-zinc-300 shadow-sm transition-all duration-300 group overflow-hidden"
