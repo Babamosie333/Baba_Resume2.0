@@ -81,13 +81,13 @@ const FeatureDataSecurity = () => {
               <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-green-600/10 z-10 pointer-events-none"></div>
               
               <div className="relative w-full h-full flex items-center justify-center p-8 animate-in fade-in duration-1000">
-                <Image
-                  src="https://slelguoygbfzlpylpxfs.supabase.co/storage/v1/object/public/test-clones/77ba5549-92dc-4b2e-a2cb-758e9202b940-magicv-art/assets/svgs/export-formats-2.svg"
-                  alt="Multiple export formats illustration"
-                  fill
-                  className="object-contain p-12 transition-transform duration-500 ease-in-out group-hover:scale-[1.02] dark:invert dark:brightness-200"
-                  priority
-                />
+                  <Image
+                    src="https://slelguoygbfzlpylpxfs.supabase.co/storage/v1/object/public/test-clones/77ba5549-92dc-4b2e-a2cb-758e9202b940-magicv-art/assets/svgs/export-formats-2.svg"
+                    alt="Multiple export formats illustration"
+                    fill
+                    className="object-contain p-12 transition-transform duration-500 ease-in-out group-hover:scale-[1.02]"
+                    priority
+                  />
               </div>
             </div>
             
