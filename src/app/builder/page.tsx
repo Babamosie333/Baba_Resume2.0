@@ -244,7 +244,7 @@ import { useLanguage } from "@/components/language-provider";
                       ) : (
                         <div className="w-full h-full flex flex-col items-center justify-center text-zinc-400">
                           <Plus className="w-6 h-6 mb-1" />
-                          <span className="text-[10px] font-bold uppercase">Photo</span>
+                          <span className="text-[10px] font-bold uppercase">{t("builder.photo")}</span>
                         </div>
                       )}
                       <input 
@@ -262,7 +262,7 @@ import { useLanguage } from "@/components/language-provider";
                           name="fullName"
                           value={data.personalInfo.fullName}
                           onChange={handlePersonalInfoChange}
-                          placeholder="John Doe"
+                          placeholder={t("builder.fullNamePlaceholder")}
                           className="w-full px-3 py-2 rounded-lg border border-zinc-200 dark:border-zinc-800 dark:bg-zinc-950 dark:text-white focus:outline-none focus:ring-2 focus:ring-black/5"
                         />
                       </div>
@@ -273,7 +273,7 @@ import { useLanguage } from "@/components/language-provider";
                           name="availability"
                           value={data.personalInfo.availability}
                           onChange={handlePersonalInfoChange}
-                          placeholder="Mon - Fri, 9 AM - 6 PM"
+                          placeholder={t("builder.availabilityPlaceholder")}
                           className="w-full px-3 py-2 rounded-lg border border-zinc-200 dark:border-zinc-800 dark:bg-zinc-950 dark:text-white focus:outline-none focus:ring-2 focus:ring-black/5"
                         />
                       </div>
@@ -288,7 +288,7 @@ import { useLanguage } from "@/components/language-provider";
                         name="email"
                         value={data.personalInfo.email}
                         onChange={handlePersonalInfoChange}
-                        placeholder="john@example.com"
+                        placeholder={t("builder.emailPlaceholder")}
                         className="w-full px-3 py-2 rounded-lg border border-zinc-200 dark:border-zinc-800 dark:bg-zinc-950 dark:text-white focus:outline-none focus:ring-2 focus:ring-black/5"
                       />
                     </div>
@@ -299,7 +299,7 @@ import { useLanguage } from "@/components/language-provider";
                         name="phone"
                         value={data.personalInfo.phone}
                         onChange={handlePersonalInfoChange}
-                        placeholder="+1 234 567 890"
+                        placeholder={t("builder.phonePlaceholder")}
                         className="w-full px-3 py-2 rounded-lg border border-zinc-200 dark:border-zinc-800 dark:bg-zinc-950 dark:text-white focus:outline-none focus:ring-2 focus:ring-black/5"
                       />
                     </div>
@@ -310,7 +310,7 @@ import { useLanguage } from "@/components/language-provider";
                         name="location"
                         value={data.personalInfo.location}
                         onChange={handlePersonalInfoChange}
-                        placeholder="New York, USA"
+                        placeholder={t("builder.locationPlaceholder")}
                         className="w-full px-3 py-2 rounded-lg border border-zinc-200 dark:border-zinc-800 dark:bg-zinc-950 dark:text-white focus:outline-none focus:ring-2 focus:ring-black/5"
                       />
                     </div>
@@ -354,7 +354,7 @@ import { useLanguage } from "@/components/language-provider";
                             type="text" 
                             value={exp.company}
                             onChange={(e) => handleListChange('experience', index, 'company', e.target.value)}
-                            placeholder="Company Name"
+                            placeholder={t("builder.companyPlaceholder")}
                             className="w-full px-3 py-2 rounded-lg border border-zinc-200 dark:border-zinc-800 dark:bg-zinc-950 dark:text-white focus:outline-none focus:ring-2 focus:ring-black/5"
                           />
                         </div>
@@ -364,7 +364,7 @@ import { useLanguage } from "@/components/language-provider";
                             type="text" 
                             value={exp.role}
                             onChange={(e) => handleListChange('experience', index, 'role', e.target.value)}
-                            placeholder="Role / Title"
+                            placeholder={t("builder.rolePlaceholder")}
                             className="w-full px-3 py-2 rounded-lg border border-zinc-200 dark:border-zinc-800 dark:bg-zinc-950 dark:text-white focus:outline-none focus:ring-2 focus:ring-black/5"
                           />
                         </div>
@@ -415,7 +415,7 @@ import { useLanguage } from "@/components/language-provider";
                       ))}
                     </div>
                   </div>
-                  <div className="grid grid-cols-20 gap-1">
+                  <div className="grid grid-cols-10 sm:grid-cols-20 gap-1">
                     {Array.from({ length: 40 }).map((_, i) => {
                       const intensities = ['bg-zinc-100 dark:bg-zinc-800', 'bg-green-900/20', 'bg-green-700/40', 'bg-green-500/60', 'bg-green-500'];
                       const randomIntensity = intensities[Math.floor(Math.random() * intensities.length)];
@@ -446,7 +446,7 @@ import { useLanguage } from "@/components/language-provider";
                             type="text" 
                             value={proj.name}
                             onChange={(e) => handleListChange('projects', index, 'name', e.target.value)}
-                            placeholder="Project Name"
+                            placeholder={t("builder.projectNamePlaceholder")}
                             className="w-full px-3 py-2 rounded-lg border border-zinc-200 dark:border-zinc-800 dark:bg-zinc-950 dark:text-white focus:outline-none focus:ring-2 focus:ring-black/5"
                           />
                         </div>
@@ -456,7 +456,7 @@ import { useLanguage } from "@/components/language-provider";
                             type="text" 
                             value={proj.link}
                             onChange={(e) => handleListChange('projects', index, 'link', e.target.value)}
-                            placeholder="https://github.com/..."
+                            placeholder={t("builder.projectLinkPlaceholder")}
                             className="w-full px-3 py-2 rounded-lg border border-zinc-200 dark:border-zinc-800 dark:bg-zinc-950 dark:text-white focus:outline-none focus:ring-2 focus:ring-black/5"
                           />
                         </div>
@@ -502,7 +502,7 @@ import { useLanguage } from "@/components/language-provider";
                             type="text" 
                             value={edu.school}
                             onChange={(e) => handleListChange('education', index, 'school', e.target.value)}
-                            placeholder="University Name"
+                            placeholder={t("builder.schoolPlaceholder")}
                             className="w-full px-3 py-2 rounded-lg border border-zinc-200 dark:border-zinc-800 dark:bg-zinc-950 dark:text-white focus:outline-none focus:ring-2 focus:ring-black/5"
                           />
                         </div>
@@ -512,7 +512,7 @@ import { useLanguage } from "@/components/language-provider";
                             type="text" 
                             value={edu.degree}
                             onChange={(e) => handleListChange('education', index, 'degree', e.target.value)}
-                            placeholder="Degree Name"
+                            placeholder={t("builder.degreePlaceholder")}
                             className="w-full px-3 py-2 rounded-lg border border-zinc-200 dark:border-zinc-800 dark:bg-zinc-950 dark:text-white focus:outline-none focus:ring-2 focus:ring-black/5"
                           />
                         </div>
@@ -523,7 +523,7 @@ import { useLanguage } from "@/components/language-provider";
                           type="text" 
                           value={edu.year}
                           onChange={(e) => handleListChange('education', index, 'year', e.target.value)}
-                          placeholder="2020 - 2024"
+                          placeholder={t("builder.yearPlaceholder")}
                           className="w-full px-3 py-2 rounded-lg border border-zinc-200 dark:border-zinc-800 dark:bg-zinc-950 dark:text-white focus:outline-none focus:ring-2 focus:ring-black/5"
                         />
                       </div>
