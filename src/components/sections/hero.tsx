@@ -71,18 +71,18 @@ const HeroSection = () => {
                 <div className="absolute inset-0 bg-gradient-to-tr from-black/5 via-blue-500/5 to-purple-500/5 rounded-2xl blur-xl"></div>
                 
                       <div className="relative w-full h-full">
-                        <Image
-                          src="https://raw.githubusercontent.com/JOYCEQL/magic-resume/main/public/images/hero-en.png"
-                          alt="Professional Resume Builder Dashboard - English Version"
-                          fill
-                          priority
-                          className="object-contain object-center drop-shadow-2xl rounded-xl"
-                          onError={(e) => {
-                            // Fallback if the raw github image isn't available
-                            const target = e.target as HTMLImageElement;
-                            target.src = "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2426&auto=format&fit=crop";
-                          }}
-                        />
+                          <Image
+                            src="https://magicv.art/_next/image?url=%2Fweb-shot.png&w=1920&q=75"
+                            alt="Professional Resume Builder Dashboard"
+                            fill
+                            priority
+                            className="object-contain object-center drop-shadow-2xl rounded-xl"
+                            onError={(e) => {
+                              // Fallback if the image isn't available
+                              const target = e.target as HTMLImageElement;
+                              target.src = "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2426&auto=format&fit=crop";
+                            }}
+                          />
                       </div>
 
               </div>
