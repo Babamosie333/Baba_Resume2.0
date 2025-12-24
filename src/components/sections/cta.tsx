@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 
 /**
@@ -50,13 +51,13 @@ const CTA = () => {
 
           {/* CTA Button Wrapper */}
           <div className="flex justify-center">
-            <button 
-              type="button"
-              className="inline-flex items-center justify-center whitespace-nowrap font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-11 rounded-md gap-2 text-lg px-12 shadow-sm hover:shadow-md active:scale-[0.98]"
+            <Link 
+              href="/builder"
+              className="inline-flex items-center justify-center whitespace-nowrap font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-black text-white hover:opacity-90 h-11 rounded-md gap-2 text-lg px-12 shadow-sm hover:shadow-md active:scale-[0.98]"
             >
               Start Using for Free
               <ArrowRight className="w-5 h-5" />
-            </button>
+            </Link>
           </div>
         </div>
       </div>
