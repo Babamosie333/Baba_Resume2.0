@@ -8,7 +8,7 @@ import Footer from "@/components/sections/footer";
 import { 
   Plus, Layout, FileText, Download, Share2, Settings, User, 
   Mail, Phone, MapPin, Briefcase, GraduationCap, Award, Trash2,
-  ChevronLeft
+  ChevronLeft, Globe, Code
 } from "lucide-react";
 import { useLanguage } from "@/components/language-provider";
 
@@ -31,7 +31,13 @@ interface ResumeData {
     degree: string;
     year: string;
   }[];
+  projects: {
+    name: string;
+    link: string;
+    description: string;
+  }[];
   skills: string[];
+  languages: string[];
 }
 
 function BuilderContent() {
@@ -43,7 +49,9 @@ function BuilderContent() {
     personalInfo: { fullName: "", email: "", phone: "", location: "", summary: "" },
     experience: [{ company: "", role: "", duration: "", description: "" }],
     education: [{ school: "", degree: "", year: "" }],
+    projects: [{ name: "", link: "", description: "" }],
     skills: [""],
+    languages: [""],
   });
 
   const handlePersonalInfoChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -54,66 +62,40 @@ function BuilderContent() {
     }));
   };
 
-  const handleExperienceChange = (index: number, e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    const newExperience = [...data.experience];
-    newExperience[index] = { ...newExperience[index], [name as any]: value };
-    setData(prev => ({ ...prev, experience: newExperience }));
+  const handleListChange = (section: 'experience' | 'education' | 'projects', index: number, name: string, value: string) => {
+    setData(prev => {
+      const newList = [...prev[section]];
+      newList[index] = { ...newList[index], [name]: value };
+      return { ...prev, [section]: newList };
+    });
   };
 
-  const handleEducationChange = (index: number, e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    const newEducation = [...data.education];
-    newEducation[index] = { ...newEducation[index], [name as any]: value };
-    setData(prev => ({ ...prev, education: newEducation }));
+  const handleArrayChange = (section: 'skills' | 'languages', index: number, value: string) => {
+    setData(prev => {
+      const newList = [...prev[section]];
+      newList[index] = value;
+      return { ...prev, [section]: newList };
+    });
   };
 
-  const handleSkillChange = (index: number, value: string) => {
-    const newSkills = [...data.skills];
-    newSkills[index] = value;
-    setData(prev => ({ ...prev, skills: newSkills }));
+  const addItem = (section: keyof ResumeData) => {
+    setData(prev => {
+      if (Array.isArray(prev[section])) {
+        if (section === 'experience') return { ...prev, experience: [...prev.experience, { company: "", role: "", duration: "", description: "" }] };
+        if (section === 'education') return { ...prev, education: [...prev.education, { school: "", degree: "", year: "" }] };
+        if (section === 'projects') return { ...prev, projects: [...prev.projects, { name: "", link: "", description: "" }] };
+        if (section === 'skills') return { ...prev, skills: [...prev.skills, ""] };
+        if (section === 'languages') return { ...prev, languages: [...prev.languages, ""] };
+      }
+      return prev;
+    });
   };
 
-  const addExperience = () => {
-    setData(prev => ({
-      ...prev,
-      experience: [...prev.experience, { company: "", role: "", duration: "", description: "" }]
-    }));
-  };
-
-  const removeExperience = (index: number) => {
-    setData(prev => ({
-      ...prev,
-      experience: prev.experience.filter((_, i) => i !== index)
-    }));
-  };
-
-  const addEducation = () => {
-    setData(prev => ({
-      ...prev,
-      education: [...prev.education, { school: "", degree: "", year: "" }]
-    }));
-  };
-
-  const removeEducation = (index: number) => {
-    setData(prev => ({
-      ...prev,
-      education: prev.education.filter((_, i) => i !== index)
-    }));
-  };
-
-  const addSkill = () => {
-    setData(prev => ({
-      ...prev,
-      skills: [...prev.skills, ""]
-    }));
-  };
-
-  const removeSkill = (index: number) => {
-    setData(prev => ({
-      ...prev,
-      skills: prev.skills.filter((_, i) => i !== index)
-    }));
+  const removeItem = (section: keyof ResumeData, index: number) => {
+    setData(prev => {
+      const newList = (prev[section] as any[]).filter((_, i) => i !== index);
+      return { ...prev, [section]: newList };
+    });
   };
 
   return (
@@ -122,14 +104,18 @@ function BuilderContent() {
         @media print {
           .no-print { display: none !important; }
           .print-only { display: block !important; }
-          body { background: white !important; padding: 0 !important; }
+          body { background: white !important; padding: 0 !important; margin: 0 !important; }
+          @page { size: auto; margin: 0mm; }
           .resume-container { 
             border: none !important; 
             box-shadow: none !important; 
             margin: 0 !important; 
-            padding: 0 !important;
-            width: 100% !important;
-            max-width: none !important;
+            padding: 20mm !important;
+            width: 210mm !important;
+            height: 297mm !important;
+            position: absolute;
+            top: 0;
+            left: 0;
           }
         }
       `}</style>
@@ -251,7 +237,7 @@ function BuilderContent() {
                     <Briefcase className="w-5 h-5 text-zinc-500" />
                     <h2 className="font-bold text-lg dark:text-white">{t("builder.experience")}</h2>
                   </div>
-                  <button onClick={addExperience} className="p-1 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded transition-colors">
+                  <button onClick={() => addItem('experience')} className="p-1 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded transition-colors">
                     <Plus className="w-5 h-5 text-zinc-600 dark:text-zinc-400" />
                   </button>
                 </div>
@@ -259,7 +245,7 @@ function BuilderContent() {
                   {data.experience.map((exp, index) => (
                     <div key={index} className="space-y-4 pt-6 border-t border-zinc-100 dark:border-zinc-800 first:border-0 first:pt-0 relative group">
                       <button 
-                        onClick={() => removeExperience(index)}
+                        onClick={() => removeItem('experience', index)}
                         className="absolute top-0 right-0 p-1 text-zinc-400 hover:text-red-500 opacity-0 group-hover:opacity-100 transition-opacity"
                       >
                         <Trash2 className="w-4 h-4" />
@@ -269,9 +255,8 @@ function BuilderContent() {
                           <label className="text-xs font-bold uppercase text-zinc-400">{t("builder.company")}</label>
                           <input 
                             type="text" 
-                            name="company"
                             value={exp.company}
-                            onChange={(e) => handleExperienceChange(index, e)}
+                            onChange={(e) => handleListChange('experience', index, 'company', e.target.value)}
                             placeholder="Company Name"
                             className="w-full px-3 py-2 rounded-lg border border-zinc-200 dark:border-zinc-800 dark:bg-zinc-950 dark:text-white focus:outline-none focus:ring-2 focus:ring-black/5"
                           />
@@ -280,23 +265,75 @@ function BuilderContent() {
                           <label className="text-xs font-bold uppercase text-zinc-400">{t("builder.role")}</label>
                           <input 
                             type="text" 
-                            name="role"
                             value={exp.role}
-                            onChange={(e) => handleExperienceChange(index, e)}
+                            onChange={(e) => handleListChange('experience', index, 'role', e.target.value)}
                             placeholder="Role / Title"
                             className="w-full px-3 py-2 rounded-lg border border-zinc-200 dark:border-zinc-800 dark:bg-zinc-950 dark:text-white focus:outline-none focus:ring-2 focus:ring-black/5"
                           />
                         </div>
                       </div>
-                      <div className="grid grid-cols-1 gap-4">
+                      <div className="space-y-1">
+                        <label className="text-xs font-bold uppercase text-zinc-400">Duration</label>
+                        <input 
+                          type="text" 
+                          value={exp.duration}
+                          onChange={(e) => handleListChange('experience', index, 'duration', e.target.value)}
+                          placeholder="Jan 2020 - Present"
+                          className="w-full px-3 py-2 rounded-lg border border-zinc-200 dark:border-zinc-800 dark:bg-zinc-950 dark:text-white focus:outline-none focus:ring-2 focus:ring-black/5"
+                        />
+                      </div>
+                      <div className="space-y-1">
+                        <label className="text-xs font-bold uppercase text-zinc-400">{t("builder.description")}</label>
+                        <textarea 
+                          value={exp.description}
+                          onChange={(e) => handleListChange('experience', index, 'description', e.target.value)}
+                          placeholder="Describe your achievements..."
+                          className="w-full px-3 py-2 rounded-lg border border-zinc-200 dark:border-zinc-800 dark:bg-zinc-950 dark:text-white focus:outline-none focus:ring-2 focus:ring-black/5 h-24 resize-none"
+                        />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </section>
+
+              {/* Projects */}
+              <section className="bg-white dark:bg-zinc-900 p-6 rounded-xl border border-zinc-200 dark:border-zinc-800 shadow-sm">
+                <div className="flex items-center justify-between mb-4">
+                  <div className="flex items-center gap-2">
+                    <Code className="w-5 h-5 text-zinc-500" />
+                    <h2 className="font-bold text-lg dark:text-white">{t("builder.projects")}</h2>
+                  </div>
+                  <button onClick={() => addItem('projects')} className="p-1 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded transition-colors">
+                    <Plus className="w-5 h-5 text-zinc-600 dark:text-zinc-400" />
+                  </button>
+                </div>
+                <div className="space-y-6">
+                  {data.projects.map((proj, index) => (
+                    <div key={index} className="space-y-4 pt-6 border-t border-zinc-100 dark:border-zinc-800 first:border-0 first:pt-0 relative group">
+                      <button 
+                        onClick={() => removeItem('projects', index)}
+                        className="absolute top-0 right-0 p-1 text-zinc-400 hover:text-red-500 opacity-0 group-hover:opacity-100 transition-opacity"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </button>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div className="space-y-1">
-                          <label className="text-xs font-bold uppercase text-zinc-400">Duration (e.g. 2020 - 2022)</label>
+                          <label className="text-xs font-bold uppercase text-zinc-400">{t("builder.projectName")}</label>
                           <input 
                             type="text" 
-                            name="duration"
-                            value={exp.duration}
-                            onChange={(e) => handleExperienceChange(index, e)}
-                            placeholder="Jan 2020 - Present"
+                            value={proj.name}
+                            onChange={(e) => handleListChange('projects', index, 'name', e.target.value)}
+                            placeholder="Project Name"
+                            className="w-full px-3 py-2 rounded-lg border border-zinc-200 dark:border-zinc-800 dark:bg-zinc-950 dark:text-white focus:outline-none focus:ring-2 focus:ring-black/5"
+                          />
+                        </div>
+                        <div className="space-y-1">
+                          <label className="text-xs font-bold uppercase text-zinc-400">{t("builder.projectLink")}</label>
+                          <input 
+                            type="text" 
+                            value={proj.link}
+                            onChange={(e) => handleListChange('projects', index, 'link', e.target.value)}
+                            placeholder="https://..."
                             className="w-full px-3 py-2 rounded-lg border border-zinc-200 dark:border-zinc-800 dark:bg-zinc-950 dark:text-white focus:outline-none focus:ring-2 focus:ring-black/5"
                           />
                         </div>
@@ -304,11 +341,10 @@ function BuilderContent() {
                       <div className="space-y-1">
                         <label className="text-xs font-bold uppercase text-zinc-400">{t("builder.description")}</label>
                         <textarea 
-                          name="description"
-                          value={exp.description}
-                          onChange={(e) => handleExperienceChange(index, e)}
-                          placeholder="Describe your achievements..."
-                          className="w-full px-3 py-2 rounded-lg border border-zinc-200 dark:border-zinc-800 dark:bg-zinc-950 dark:text-white focus:outline-none focus:ring-2 focus:ring-black/5 h-24 resize-none"
+                          value={proj.description}
+                          onChange={(e) => handleListChange('projects', index, 'description', e.target.value)}
+                          placeholder="Describe the project..."
+                          className="w-full px-3 py-2 rounded-lg border border-zinc-200 dark:border-zinc-800 dark:bg-zinc-950 dark:text-white focus:outline-none focus:ring-2 focus:ring-black/5 h-20 resize-none"
                         />
                       </div>
                     </div>
@@ -323,7 +359,7 @@ function BuilderContent() {
                     <GraduationCap className="w-5 h-5 text-zinc-500" />
                     <h2 className="font-bold text-lg dark:text-white">{t("builder.education")}</h2>
                   </div>
-                  <button onClick={addEducation} className="p-1 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded transition-colors">
+                  <button onClick={() => addItem('education')} className="p-1 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded transition-colors">
                     <Plus className="w-5 h-5 text-zinc-600 dark:text-zinc-400" />
                   </button>
                 </div>
@@ -331,7 +367,7 @@ function BuilderContent() {
                   {data.education.map((edu, index) => (
                     <div key={index} className="space-y-4 pt-6 border-t border-zinc-100 dark:border-zinc-800 first:border-0 first:pt-0 relative group">
                       <button 
-                        onClick={() => removeEducation(index)}
+                        onClick={() => removeItem('education', index)}
                         className="absolute top-0 right-0 p-1 text-zinc-400 hover:text-red-500 opacity-0 group-hover:opacity-100 transition-opacity"
                       >
                         <Trash2 className="w-4 h-4" />
@@ -341,9 +377,8 @@ function BuilderContent() {
                           <label className="text-xs font-bold uppercase text-zinc-400">{t("builder.school")}</label>
                           <input 
                             type="text" 
-                            name="school"
                             value={edu.school}
-                            onChange={(e) => handleEducationChange(index, e)}
+                            onChange={(e) => handleListChange('education', index, 'school', e.target.value)}
                             placeholder="University Name"
                             className="w-full px-3 py-2 rounded-lg border border-zinc-200 dark:border-zinc-800 dark:bg-zinc-950 dark:text-white focus:outline-none focus:ring-2 focus:ring-black/5"
                           />
@@ -352,50 +387,82 @@ function BuilderContent() {
                           <label className="text-xs font-bold uppercase text-zinc-400">{t("builder.degree")}</label>
                           <input 
                             type="text" 
-                            name="degree"
                             value={edu.degree}
-                            onChange={(e) => handleEducationChange(index, e)}
+                            onChange={(e) => handleListChange('education', index, 'degree', e.target.value)}
                             placeholder="Degree Name"
                             className="w-full px-3 py-2 rounded-lg border border-zinc-200 dark:border-zinc-800 dark:bg-zinc-950 dark:text-white focus:outline-none focus:ring-2 focus:ring-black/5"
                           />
                         </div>
+                      </div>
+                      <div className="space-y-1">
+                        <label className="text-xs font-bold uppercase text-zinc-400">{t("builder.year")}</label>
+                        <input 
+                          type="text" 
+                          value={edu.year}
+                          onChange={(e) => handleListChange('education', index, 'year', e.target.value)}
+                          placeholder="2020 - 2024"
+                          className="w-full px-3 py-2 rounded-lg border border-zinc-200 dark:border-zinc-800 dark:bg-zinc-950 dark:text-white focus:outline-none focus:ring-2 focus:ring-black/5"
+                        />
                       </div>
                     </div>
                   ))}
                 </div>
               </section>
 
-              {/* Skills */}
-              <section className="bg-white dark:bg-zinc-900 p-6 rounded-xl border border-zinc-200 dark:border-zinc-800 shadow-sm">
-                <div className="flex items-center justify-between mb-4">
-                  <div className="flex items-center gap-2">
-                    <Award className="w-5 h-5 text-zinc-500" />
-                    <h2 className="font-bold text-lg dark:text-white">{t("builder.skills")}</h2>
-                  </div>
-                  <button onClick={addSkill} className="p-1 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded transition-colors">
-                    <Plus className="w-5 h-5 text-zinc-600 dark:text-zinc-400" />
-                  </button>
-                </div>
-                <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                  {data.skills.map((skill, index) => (
-                    <div key={index} className="relative group">
-                      <input 
-                        type="text" 
-                        value={skill}
-                        onChange={(e) => handleSkillChange(index, e.target.value)}
-                        placeholder="Skill Name"
-                        className="w-full px-3 py-2 rounded-lg border border-zinc-200 dark:border-zinc-800 dark:bg-zinc-950 dark:text-white focus:outline-none focus:ring-2 focus:ring-black/5 text-sm"
-                      />
-                      <button 
-                        onClick={() => removeSkill(index)}
-                        className="absolute top-1/2 -right-2 -translate-y-1/2 p-1 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-full text-zinc-400 hover:text-red-500 opacity-0 group-hover:opacity-100 transition-opacity shadow-sm"
-                      >
-                        <Trash2 className="w-3 h-3" />
-                      </button>
+              {/* Skills & Languages */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <section className="bg-white dark:bg-zinc-900 p-6 rounded-xl border border-zinc-200 dark:border-zinc-800 shadow-sm">
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center gap-2">
+                      <Award className="w-5 h-5 text-zinc-500" />
+                      <h2 className="font-bold text-lg dark:text-white">{t("builder.skills")}</h2>
                     </div>
-                  ))}
-                </div>
-              </section>
+                    <button onClick={() => addItem('skills')} className="p-1 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded transition-colors">
+                      <Plus className="w-5 h-5 text-zinc-600 dark:text-zinc-400" />
+                    </button>
+                  </div>
+                  <div className="space-y-2">
+                    {data.skills.map((skill, index) => (
+                      <div key={index} className="relative group">
+                        <input 
+                          type="text" 
+                          value={skill}
+                          onChange={(e) => handleArrayChange('skills', index, e.target.value)}
+                          placeholder="Skill"
+                          className="w-full px-3 py-2 rounded-lg border border-zinc-200 dark:border-zinc-800 dark:bg-zinc-950 dark:text-white focus:outline-none focus:ring-2 focus:ring-black/5 text-sm"
+                        />
+                        <button onClick={() => removeItem('skills', index)} className="absolute right-2 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-red-500 opacity-0 group-hover:opacity-100"><Trash2 className="w-3 h-3"/></button>
+                      </div>
+                    ))}
+                  </div>
+                </section>
+
+                <section className="bg-white dark:bg-zinc-900 p-6 rounded-xl border border-zinc-200 dark:border-zinc-800 shadow-sm">
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center gap-2">
+                      <Globe className="w-5 h-5 text-zinc-500" />
+                      <h2 className="font-bold text-lg dark:text-white">{t("builder.languages")}</h2>
+                    </div>
+                    <button onClick={() => addItem('languages')} className="p-1 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded transition-colors">
+                      <Plus className="w-5 h-5 text-zinc-600 dark:text-zinc-400" />
+                    </button>
+                  </div>
+                  <div className="space-y-2">
+                    {data.languages.map((lang, index) => (
+                      <div key={index} className="relative group">
+                        <input 
+                          type="text" 
+                          value={lang}
+                          onChange={(e) => handleArrayChange('languages', index, e.target.value)}
+                          placeholder="Language"
+                          className="w-full px-3 py-2 rounded-lg border border-zinc-200 dark:border-zinc-800 dark:bg-zinc-950 dark:text-white focus:outline-none focus:ring-2 focus:ring-black/5 text-sm"
+                        />
+                        <button onClick={() => removeItem('languages', index)} className="absolute right-2 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-red-500 opacity-0 group-hover:opacity-100"><Trash2 className="w-3 h-3"/></button>
+                      </div>
+                    ))}
+                  </div>
+                </section>
+              </div>
             </div>
 
             {/* Preview Side */}
@@ -444,47 +511,83 @@ function ResumePreview({ data, templateId, isPrint = false }: { data: ResumeData
         )}
 
         <div className="space-y-6">
-          <section>
-            <h2 className="text-sm font-bold uppercase tracking-widest mb-3">{t("builder.experience")}</h2>
-            <div className="space-y-4">
-              {data.experience.map((exp, i) => (
-                (exp.company || exp.role) && (
-                  <div key={i} className="grid grid-cols-4 gap-4">
-                    <div className="text-[10px] font-bold text-zinc-400 uppercase pt-1">{exp.duration}</div>
-                    <div className="col-span-3">
-                      <h3 className="font-bold text-sm">{exp.role}</h3>
-                      <p className="text-xs font-bold text-zinc-500 mb-1">{exp.company}</p>
-                      <p className="text-xs text-zinc-600 leading-relaxed">{exp.description}</p>
+          {data.experience.some(e => e.company) && (
+            <section>
+              <h2 className="text-sm font-bold uppercase tracking-widest mb-3">{t("builder.experience")}</h2>
+              <div className="space-y-4">
+                {data.experience.map((exp, i) => (
+                  exp.company && (
+                    <div key={i} className="grid grid-cols-4 gap-4">
+                      <div className="text-[10px] font-bold text-zinc-400 uppercase pt-1">{exp.duration}</div>
+                      <div className="col-span-3">
+                        <h3 className="font-bold text-sm">{exp.role}</h3>
+                        <p className="text-xs font-bold text-zinc-500 mb-1">{exp.company}</p>
+                        <p className="text-xs text-zinc-600 leading-relaxed">{exp.description}</p>
+                      </div>
                     </div>
-                  </div>
-                )
-              ))}
-            </div>
-          </section>
+                  )
+                ))}
+              </div>
+            </section>
+          )}
 
-          <section>
-            <h2 className="text-sm font-bold uppercase tracking-widest mb-3">{t("builder.education")}</h2>
-            <div className="space-y-3">
-              {data.education.map((edu, i) => (
-                (edu.school || edu.degree) && (
-                  <div key={i} className="grid grid-cols-4 gap-4">
-                    <div className="text-[10px] font-bold text-zinc-400 uppercase pt-1">{edu.year}</div>
-                    <div className="col-span-3">
-                      <h3 className="font-bold text-sm">{edu.degree}</h3>
-                      <p className="text-xs text-zinc-500">{edu.school}</p>
+          {data.projects.some(p => p.name) && (
+            <section>
+              <h2 className="text-sm font-bold uppercase tracking-widest mb-3">{t("builder.projects")}</h2>
+              <div className="space-y-4">
+                {data.projects.map((proj, i) => (
+                  proj.name && (
+                    <div key={i} className="grid grid-cols-4 gap-4">
+                      <div className="text-[10px] font-bold text-zinc-400 uppercase pt-1">Project</div>
+                      <div className="col-span-3">
+                        <h3 className="font-bold text-sm">{proj.name}</h3>
+                        {proj.link && <p className="text-[10px] text-blue-600 mb-1">{proj.link}</p>}
+                        <p className="text-xs text-zinc-600">{proj.description}</p>
+                      </div>
                     </div>
-                  </div>
-                )
-              ))}
-            </div>
-          </section>
+                  )
+                ))}
+              </div>
+            </section>
+          )}
 
-          <section>
-            <h2 className="text-sm font-bold uppercase tracking-widest mb-3">{t("builder.skills")}</h2>
-            <div className="flex flex-wrap gap-x-6 gap-y-2">
-              {data.skills.map((skill, i) => skill && <span key={i} className="text-xs font-bold uppercase tracking-tight">{skill}</span>)}
-            </div>
-          </section>
+          {data.education.some(e => e.school) && (
+            <section>
+              <h2 className="text-sm font-bold uppercase tracking-widest mb-3">{t("builder.education")}</h2>
+              <div className="space-y-3">
+                {data.education.map((edu, i) => (
+                  edu.school && (
+                    <div key={i} className="grid grid-cols-4 gap-4">
+                      <div className="text-[10px] font-bold text-zinc-400 uppercase pt-1">{edu.year}</div>
+                      <div className="col-span-3">
+                        <h3 className="font-bold text-sm">{edu.degree}</h3>
+                        <p className="text-xs text-zinc-500">{edu.school}</p>
+                      </div>
+                    </div>
+                  )
+                ))}
+              </div>
+            </section>
+          )}
+
+          <div className="grid grid-cols-2 gap-8">
+            {data.skills.some(s => s) && (
+              <section>
+                <h2 className="text-sm font-bold uppercase tracking-widest mb-3">{t("builder.skills")}</h2>
+                <div className="flex flex-wrap gap-x-4 gap-y-1">
+                  {data.skills.map((skill, i) => skill && <span key={i} className="text-xs font-bold uppercase tracking-tight">{skill}</span>)}
+                </div>
+              </section>
+            )}
+            {data.languages.some(l => l) && (
+              <section>
+                <h2 className="text-sm font-bold uppercase tracking-widest mb-3">{t("builder.languages")}</h2>
+                <div className="flex flex-wrap gap-x-4 gap-y-1">
+                  {data.languages.map((lang, i) => lang && <span key={i} className="text-xs font-bold uppercase tracking-tight">{lang}</span>)}
+                </div>
+              </section>
+            )}
+          </div>
         </div>
       </div>
     );
@@ -511,7 +614,7 @@ function ResumePreview({ data, templateId, isPrint = false }: { data: ResumeData
                 <h2 className="text-[10px] font-black uppercase text-zinc-400 mb-2 tracking-widest">Education</h2>
                 <div className="space-y-4">
                   {data.education.map((edu, i) => (
-                    (edu.school || edu.degree) && (
+                    edu.school && (
                       <div key={i}>
                         <p className="font-bold text-xs">{edu.degree}</p>
                         <p className="text-[10px] text-zinc-500">{edu.school}</p>
@@ -532,6 +635,15 @@ function ResumePreview({ data, templateId, isPrint = false }: { data: ResumeData
                   ))}
                 </div>
               </section>
+
+              <section>
+                <h2 className="text-[10px] font-black uppercase text-zinc-400 mb-2 tracking-widest">Languages</h2>
+                <div className="flex flex-wrap gap-1">
+                  {data.languages.map((lang, i) => lang && (
+                    <span key={i} className="text-xs font-bold">{lang}</span>
+                  ))}
+                </div>
+              </section>
             </div>
           </div>
           
@@ -543,11 +655,11 @@ function ResumePreview({ data, templateId, isPrint = false }: { data: ResumeData
               </div>
             )}
 
-            <section>
+            <section className="mb-8">
               <h2 className="text-[10px] font-black uppercase text-zinc-400 mb-4 tracking-widest">Experience</h2>
               <div className="space-y-6">
                 {data.experience.map((exp, i) => (
-                  (exp.company || exp.role) && (
+                  exp.company && (
                     <div key={i} className="relative pl-4 border-l-2 border-zinc-100">
                       <div className="absolute w-2 h-2 bg-black rounded-full -left-[5px] top-1.5" />
                       <h3 className="font-black text-sm uppercase tracking-tight">{exp.role}</h3>
@@ -561,6 +673,24 @@ function ResumePreview({ data, templateId, isPrint = false }: { data: ResumeData
                 ))}
               </div>
             </section>
+
+            {data.projects.some(p => p.name) && (
+              <section>
+                <h2 className="text-[10px] font-black uppercase text-zinc-400 mb-4 tracking-widest">Projects</h2>
+                <div className="space-y-6">
+                  {data.projects.map((proj, i) => (
+                    proj.name && (
+                      <div key={i} className="relative pl-4 border-l-2 border-zinc-100">
+                        <div className="absolute w-2 h-2 bg-black rounded-full -left-[5px] top-1.5" />
+                        <h3 className="font-black text-sm uppercase tracking-tight">{proj.name}</h3>
+                        {proj.link && <p className="text-[10px] text-zinc-500 font-bold mb-1">{proj.link}</p>}
+                        <p className="text-xs text-zinc-600 leading-relaxed">{proj.description}</p>
+                      </div>
+                    )
+                  ))}
+                </div>
+              </section>
+            )}
           </div>
         </div>
       </div>
@@ -581,7 +711,7 @@ function ResumePreview({ data, templateId, isPrint = false }: { data: ResumeData
         </div>
       </div>
 
-      <div className="space-y-8">
+      <div className="space-y-6">
         {data.personalInfo.summary && (
           <div>
             <h2 className="text-xs font-bold uppercase tracking-[0.2em] border-b border-zinc-200 pb-1 mb-3">Professional Summary</h2>
@@ -589,19 +719,19 @@ function ResumePreview({ data, templateId, isPrint = false }: { data: ResumeData
           </div>
         )}
 
-        {data.experience.some(e => e.company || e.role) && (
+        {data.experience.some(e => e.company) && (
           <div>
             <h2 className="text-xs font-bold uppercase tracking-[0.2em] border-b border-zinc-200 pb-1 mb-4">{t("builder.experience")}</h2>
             <div className="space-y-5">
               {data.experience.map((exp, i) => (
-                (exp.company || exp.role) && (
+                exp.company && (
                   <div key={i}>
                     <div className="flex justify-between items-start mb-1">
-                      <h3 className="font-bold text-sm">{exp.role || "Role Title"}</h3>
-                      <span className="text-xs text-zinc-500 font-bold">{exp.duration || "2020 - Present"}</span>
+                      <h3 className="font-bold text-sm">{exp.role}</h3>
+                      <span className="text-xs text-zinc-500 font-bold">{exp.duration}</span>
                     </div>
-                    <p className="text-sm font-bold text-zinc-500 mb-1">{exp.company || "Company Name"}</p>
-                    <p className="text-xs text-zinc-600 leading-relaxed whitespace-pre-wrap italic">{exp.description || "Describe your key responsibilities and achievements in this role."}</p>
+                    <p className="text-sm font-bold text-zinc-500 mb-1">{exp.company}</p>
+                    <p className="text-xs text-zinc-600 leading-relaxed whitespace-pre-wrap italic">{exp.description}</p>
                   </div>
                 )
               ))}
@@ -609,18 +739,37 @@ function ResumePreview({ data, templateId, isPrint = false }: { data: ResumeData
           </div>
         )}
 
-        {data.education.some(e => e.school || e.degree) && (
+        {data.projects.some(p => p.name) && (
+          <div>
+            <h2 className="text-xs font-bold uppercase tracking-[0.2em] border-b border-zinc-200 pb-1 mb-4">{t("builder.projects")}</h2>
+            <div className="space-y-4">
+              {data.projects.map((proj, i) => (
+                proj.name && (
+                  <div key={i}>
+                    <div className="flex justify-between items-start mb-1">
+                      <h3 className="font-bold text-sm">{proj.name}</h3>
+                      <span className="text-xs text-zinc-500 font-bold">{proj.link}</span>
+                    </div>
+                    <p className="text-xs text-zinc-600 leading-relaxed whitespace-pre-wrap italic">{proj.description}</p>
+                  </div>
+                )
+              ))}
+            </div>
+          </div>
+        )}
+
+        {data.education.some(e => e.school) && (
           <div>
             <h2 className="text-xs font-bold uppercase tracking-[0.2em] border-b border-zinc-200 pb-1 mb-4">{t("builder.education")}</h2>
             <div className="space-y-4">
               {data.education.map((edu, i) => (
-                (edu.school || edu.degree) && (
+                edu.school && (
                   <div key={i}>
                     <div className="flex justify-between items-start mb-1">
-                      <h3 className="font-bold text-sm">{edu.degree || "Degree Name"}</h3>
-                      <span className="text-xs text-zinc-500 font-bold">{edu.year || "2020"}</span>
+                      <h3 className="font-bold text-sm">{edu.degree}</h3>
+                      <span className="text-xs text-zinc-500 font-bold">{edu.year}</span>
                     </div>
-                    <p className="text-sm font-medium text-zinc-700">{edu.school || "University Name"}</p>
+                    <p className="text-sm font-medium text-zinc-700">{edu.school}</p>
                   </div>
                 )
               ))}
@@ -628,20 +777,36 @@ function ResumePreview({ data, templateId, isPrint = false }: { data: ResumeData
           </div>
         )}
 
-        {data.skills.some(s => s) && (
-          <div>
-            <h2 className="text-xs font-bold uppercase tracking-[0.2em] border-b border-zinc-200 pb-1 mb-4">{t("builder.skills")}</h2>
-            <div className="flex flex-wrap gap-2">
-              {data.skills.map((skill, i) => (
-                skill && (
-                  <span key={i} className="px-2 py-1 bg-zinc-100 text-zinc-800 text-[10px] font-bold rounded uppercase border border-zinc-200">
-                    {skill}
-                  </span>
-                )
-              ))}
+        <div className="grid grid-cols-2 gap-8">
+          {data.skills.some(s => s) && (
+            <div>
+              <h2 className="text-xs font-bold uppercase tracking-[0.2em] border-b border-zinc-200 pb-1 mb-4">{t("builder.skills")}</h2>
+              <div className="flex flex-wrap gap-2">
+                {data.skills.map((skill, i) => (
+                  skill && (
+                    <span key={i} className="px-2 py-1 bg-zinc-100 text-zinc-800 text-[10px] font-bold rounded uppercase border border-zinc-200">
+                      {skill}
+                    </span>
+                  )
+                ))}
+              </div>
             </div>
-          </div>
-        )}
+          )}
+          {data.languages.some(l => l) && (
+            <div>
+              <h2 className="text-xs font-bold uppercase tracking-[0.2em] border-b border-zinc-200 pb-1 mb-4">{t("builder.languages")}</h2>
+              <div className="flex flex-wrap gap-2">
+                {data.languages.map((lang, i) => (
+                  lang && (
+                    <span key={i} className="px-2 py-1 bg-zinc-100 text-zinc-800 text-[10px] font-bold rounded uppercase border border-zinc-200">
+                      {lang}
+                    </span>
+                  )
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
