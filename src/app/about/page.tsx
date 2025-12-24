@@ -4,6 +4,7 @@ import Navbar from "@/components/sections/navbar";
 import Footer from "@/components/sections/footer";
 import { useLanguage } from "@/components/language-provider";
 import { Target, Users, Shield, Zap } from "lucide-react";
+import Link from "next/link";
 
 export default function AboutPage() {
   const { t } = useLanguage();
@@ -11,23 +12,23 @@ export default function AboutPage() {
   const values = [
     {
       icon: <Target className="w-6 h-6" />,
-      title: "Precision",
-      description: "Our AI is tuned to help you present your experience with maximum impact."
+      title: t("about.precision"),
+      description: t("about.precisionDesc")
     },
     {
       icon: <Users className="w-6 h-6" />,
-      title: "Accessibility",
-      description: "We believe everyone deserves a professional resume, regardless of their tech skills."
+      title: t("about.accessibility"),
+      description: t("about.accessibilityDesc")
     },
     {
       icon: <Shield className="w-6 h-6" />,
-      title: "Privacy First",
-      description: "Your data stays on your device. We never sell your personal information."
+      title: t("about.privacy"),
+      description: t("about.privacyDesc")
     },
     {
       icon: <Zap className="w-6 h-6" />,
-      title: "Speed",
-      description: "Build a professional resume in minutes, not hours."
+      title: t("about.speed"),
+      description: t("about.speedDesc")
     }
   ];
 
@@ -39,19 +40,19 @@ export default function AboutPage() {
         <div className="max-w-[1000px] mx-auto">
           <div className="text-center mb-16">
             <h1 className="text-4xl md:text-5xl font-bold text-[#030712] dark:text-white mb-6 tracking-tight">
-              Our Mission
+              {t("about.mission")}
             </h1>
             <p className="text-xl text-muted-foreground dark:text-zinc-400 max-w-2xl mx-auto leading-relaxed">
-              Empowering job seekers with smart, accessible tools to build professional resumes and land their dream jobs.
+              {t("about.missionDesc")}
             </p>
           </div>
 
-          <div className="prose prose-zinc dark:prose-invert max-w-none mb-20">
+          <div className="prose prose-zinc dark:prose-invert max-w-none mb-20 text-center">
             <p className="text-lg text-zinc-600 dark:text-zinc-400 leading-relaxed mb-6">
-              Baba_Resume2.0 was born out of a simple observation: the traditional process of creating a resume is often tedious, confusing, and technically demanding. We set out to build a platform that leverages modern technology to make this process seamless and even enjoyable.
+              {t("about.story1")}
             </p>
             <p className="text-lg text-zinc-600 dark:text-zinc-400 leading-relaxed">
-              Our platform uses advanced AI to help users articulate their achievements, while our clean, modern templates ensure that the final result is always professional and ATS-friendly. Best of all, we've designed everything with a "privacy-first" mindset, meaning your sensitive data is always handled with the utmost care.
+              {t("about.story2")}
             </p>
           </div>
 
@@ -69,14 +70,14 @@ export default function AboutPage() {
             ))}
           </div>
 
-          <div className="mt-24 p-12 rounded-3xl bg-black dark:bg-white text-white dark:text-black text-center">
-            <h2 className="text-3xl font-bold mb-6">Join 10,000+ happy users</h2>
+          <div className="mt-24 p-12 rounded-3xl bg-black dark:bg-white text-white dark:text-black text-center shadow-2xl">
+            <h2 className="text-3xl font-bold mb-6">{t("about.joinTitle")}</h2>
             <p className="text-zinc-400 dark:text-zinc-600 mb-8 max-w-xl mx-auto text-lg">
-              Start building your professional resume today and take the next step in your career journey.
+              {t("about.joinDesc")}
             </p>
-            <button className="bg-white dark:bg-black text-black dark:text-white px-8 py-4 rounded-xl font-bold text-lg hover:opacity-90 transition-all active:scale-95 shadow-xl">
-              Get Started for Free
-            </button>
+            <Link href="/builder" className="inline-block bg-white dark:bg-black text-black dark:text-white px-8 py-4 rounded-xl font-bold text-lg hover:opacity-90 transition-all active:scale-95 shadow-xl">
+              {t("about.getStarted")}
+            </Link>
           </div>
         </div>
       </main>
