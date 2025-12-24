@@ -68,7 +68,7 @@ import { useLanguage } from "@/components/language-provider";
         year: "2020 - 2024" 
       }],
       projects: [{ 
-        name: "Magic Resume Clone", 
+        name: "Magic Resume", 
         link: "https://github.com/Babamosie333/Baba_Resume2.0", 
         description: "A professional resume builder with AI detection and advice features." 
       }],
