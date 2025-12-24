@@ -72,11 +72,11 @@ const HeroSection = () => {
                 
                 <div className="relative w-full h-full">
                     <Image
-                      src="https://slelguoygbfzlpylpxfs.supabase.co/storage/v1/object/public/test-clones/77ba5549-92dc-4b2e-a2cb-758e9202b940-magicv-art/assets/images/images_1.png"
-                      alt="Resume Editor Preview"
+                      src="https://images.unsplash.com/photo-1586281380349-632531db7ed4?q=80&w=2070&auto=format&fit=crop"
+                      alt="Professional Resume Preview"
                       fill
                       priority
-                      className="object-contain object-center drop-shadow-2xl"
+                      className="object-contain object-center drop-shadow-2xl rounded-xl"
                     />
                 </div>
               </div>
