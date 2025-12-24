@@ -113,9 +113,10 @@ const translations: Record<Language, Record<string, string>> = {
     "faq.a5": "Baba_Resume2.0 offers significant flexibility with various professional templates and AI suggestions.",
     "contact.title": "Contact Us",
     "contact.subtitle": "Have questions or feedback? We'd love to hear from you. Our team is here to help.",
-    "contact.emailUs": "Email Us",
-    "contact.emailDesc": "vikramsingh14052006@gmail.com",
-    "contact.phone": "Phone Number",
+      "contact.emailUs": "Email Us",
+      "contact.emailDesc": "vikramsingh1405206@gmail.com",
+      "contact.phone": "Phone Number",
+
     "contact.phoneDesc": "+91 8081477034",
     "contact.location": "Our Location",
     "contact.locationDesc": "Kanpur, Uttar Pradesh, India",
