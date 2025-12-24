@@ -39,18 +39,18 @@ export default function ContactPage() {
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
             <div className="lg:col-span-1 space-y-8">
-              <div className="flex items-start gap-4 p-6 rounded-2xl bg-[#f8f9fb] dark:bg-zinc-900/50 border border-zinc-200 dark:border-zinc-800">
-                <div className="w-10 h-10 rounded-lg bg-black dark:bg-white text-white dark:text-black flex items-center justify-center flex-shrink-0">
+              <div className="flex items-start gap-4 p-6 rounded-2xl bg-[#f8f9fb] dark:bg-zinc-900/50 border border-zinc-200 dark:border-zinc-800 transition-all hover:shadow-md">
+                <div className="w-10 h-10 rounded-lg bg-black dark:bg-white text-white dark:text-black flex items-center justify-center flex-shrink-0 shadow-lg">
                   <Mail className="w-5 h-5" />
                 </div>
                 <div>
                   <h3 className="font-bold text-[#030712] dark:text-white mb-1">{t("contact.emailUs")}</h3>
-                  <p className="text-sm text-zinc-600 dark:text-zinc-400">{t("contact.emailDesc")}</p>
+                  <p className="text-sm text-zinc-600 dark:text-zinc-400 break-all">{t("contact.emailDesc")}</p>
                 </div>
               </div>
 
-              <div className="flex items-start gap-4 p-6 rounded-2xl bg-[#f8f9fb] dark:bg-zinc-900/50 border border-zinc-200 dark:border-zinc-800">
-                <div className="w-10 h-10 rounded-lg bg-black dark:bg-white text-white dark:text-black flex items-center justify-center flex-shrink-0">
+              <div className="flex items-start gap-4 p-6 rounded-2xl bg-[#f8f9fb] dark:bg-zinc-900/50 border border-zinc-200 dark:border-zinc-800 transition-all hover:shadow-md">
+                <div className="w-10 h-10 rounded-lg bg-black dark:bg-white text-white dark:text-black flex items-center justify-center flex-shrink-0 shadow-lg">
                   <Phone className="w-5 h-5" />
                 </div>
                 <div>
@@ -59,8 +59,8 @@ export default function ContactPage() {
                 </div>
               </div>
 
-              <div className="flex items-start gap-4 p-6 rounded-2xl bg-[#f8f9fb] dark:bg-zinc-900/50 border border-zinc-200 dark:border-zinc-800">
-                <div className="w-10 h-10 rounded-lg bg-black dark:bg-white text-white dark:text-black flex items-center justify-center flex-shrink-0">
+              <div className="flex items-start gap-4 p-6 rounded-2xl bg-[#f8f9fb] dark:bg-zinc-900/50 border border-zinc-200 dark:border-zinc-800 transition-all hover:shadow-md">
+                <div className="w-10 h-10 rounded-lg bg-black dark:bg-white text-white dark:text-black flex items-center justify-center flex-shrink-0 shadow-lg">
                   <MapPin className="w-5 h-5" />
                 </div>
                 <div>
@@ -71,7 +71,7 @@ export default function ContactPage() {
             </div>
 
             <div className="lg:col-span-2">
-              <form onSubmit={handleSubmit} className="p-8 md:p-10 rounded-3xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 shadow-xl space-y-6">
+              <form onSubmit={handleSubmit} className="p-8 md:p-10 rounded-3xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 shadow-2xl space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-2">
                     <label className="text-sm font-medium text-zinc-700 dark:text-zinc-300">{t("contact.firstName")}</label>
