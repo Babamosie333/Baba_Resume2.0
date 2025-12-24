@@ -627,7 +627,7 @@ function BuilderContent() {
             </div>
 
             {/* Preview Side */}
-            <div className="lg:sticky lg:top-24 h-[calc(100vh-140px)] overflow-y-auto no-print custom-scrollbar pr-2">
+            <div className="lg:sticky lg:top-24 h-[calc(100vh-140px)] overflow-y-auto no-print custom-scrollbar pr-2 pb-20">
               <ResumePreview data={data} templateId={templateId} fontSize={fontSize} githubStats={githubStats} mounted={mounted} />
             </div>
           </div>
