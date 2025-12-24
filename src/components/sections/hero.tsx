@@ -70,15 +70,15 @@ const HeroSection = () => {
               <div className="relative h-[300px] lg:h-[600px] w-full flex items-center justify-center">
                 <div className="absolute inset-0 bg-gradient-to-tr from-black/5 via-blue-500/5 to-purple-500/5 rounded-2xl blur-xl"></div>
                 
-                    <div className="relative w-full h-full">
-                      <Image
-                        src="https://images.unsplash.com/photo-1586281380117-5a60ae2050cc?q=80&w=2070&auto=format&fit=crop"
-                        alt="Professional English Resume Dashboard"
-                        fill
-                        priority
-                        className="object-contain object-center drop-shadow-2xl rounded-xl"
-                      />
-                    </div>
+                      <div className="relative w-full h-full">
+                        <Image
+                          src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2426&auto=format&fit=crop"
+                          alt="Professional Resume Builder Dashboard - English Version"
+                          fill
+                          priority
+                          className="object-contain object-center drop-shadow-2xl rounded-xl"
+                        />
+                      </div>
 
               </div>
             </div>
