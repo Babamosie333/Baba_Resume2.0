@@ -95,11 +95,13 @@ export async function POST(request: Request) {
         success: true, 
         message: 'Message sent successfully'
       });
-    } catch (sendError: any) {
-      console.error('Resend SDK error:', sendError);
-      return NextResponse.json({ success: false, error: 'Failed to send message, please try again later' }, { status: 500 });
-    }
-  } catch (error: any) {
+      } catch (sendError: any) {
+        console.error('Resend SDK error:', sendError);
+        return NextResponse.json({ success: false, error: 'Failed to send message, please try again later' }, { status: 500 });
+      }
+    */
+    } catch (error: any) {
+
     console.error('Unhandled API error:', error);
     return NextResponse.json({ 
       success: false, 
