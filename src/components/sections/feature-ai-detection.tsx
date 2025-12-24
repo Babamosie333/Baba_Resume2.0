@@ -3,6 +3,7 @@
 import React from 'react';
 import Image from 'next/image';
 import { CircleArrowRight } from 'lucide-react';
+import { useLanguage } from '@/components/language-provider';
 
 /**
  * AI Detection Feature Section
@@ -10,16 +11,18 @@ import { CircleArrowRight } from 'lucide-react';
  * Includes the English heading "Smart Detection, Professional Advice" and the animated grammar check SVG illustration.
  */
 export default function FeatureAiDetection() {
+  const { t } = useLanguage();
+
   return (
-    <section className="py-20 md:py-32 bg-gradient-to-b from-background to-primary/5">
+    <section className="py-20 md:py-32 bg-white dark:bg-zinc-950 transition-colors duration-200">
       <div className="mx-auto max-w-[1200px] px-4">
         {/* Header Content */}
         <div className="text-center mb-16 md:mb-24">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4 md:mb-6">
-            Why Choose Baba_Resume2.0?
+          <h2 className="text-3xl md:text-4xl font-bold mb-4 md:mb-6 text-zinc-900 dark:text-white">
+            {t("features.ai.title")}
           </h2>
-          <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
-            We provide an all-in-one resume solution to make your job search journey smoother
+          <p className="text-lg md:text-xl text-zinc-600 dark:text-zinc-400 max-w-2xl mx-auto">
+            {t("features.ai.subtitle")}
           </p>
         </div>
 
@@ -31,12 +34,11 @@ export default function FeatureAiDetection() {
               <span className="text-[12px] font-semibold text-white px-2 py-1 rounded-full bg-blue-500 leading-none">
                 AI
               </span>
-              <h3 className="text-2xl md:text-3xl font-bold text-center md:text-left text-[#000000]">
-                Smart Detection, Professional Advice
+              <h3 className="text-2xl md:text-3xl font-bold text-center md:text-left text-zinc-900 dark:text-white">
+                {t("features.ai.smart.title")}
               </h3>
-              <p className="text-muted-foreground text-center md:text-left leading-relaxed">
-                Built-in smart grammar check, automatically identifies inappropriate expressions, 
-                provides professional modification suggestions, making your resume more outstanding.
+              <p className="text-zinc-600 dark:text-zinc-400 text-center md:text-left leading-relaxed">
+                {t("features.ai.smart.desc")}
               </p>
             </div>
 
@@ -45,10 +47,10 @@ export default function FeatureAiDetection() {
               <li className="cursor-pointer relative p-2 rounded-lg transition-all group">
                 <div className="flex items-center gap-3">
                   <div className="relative w-6 h-6 flex items-center justify-center">
-                    <CircleArrowRight className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
+                    <CircleArrowRight className="w-5 h-5 text-zinc-400 group-hover:text-primary transition-colors" />
                   </div>
-                  <span className="transition-all duration-200 text-muted-foreground font-medium">
-                    Intelligent enhancement
+                  <span className="transition-all duration-200 text-zinc-500 dark:text-zinc-400 font-medium">
+                    {t("features.ai.item1")}
                   </span>
                 </div>
               </li>
@@ -64,7 +66,7 @@ export default function FeatureAiDetection() {
                         r="10" 
                         stroke="currentColor" 
                         strokeWidth="2" 
-                        className="text-border dark:text-gray-700" 
+                        className="text-zinc-200 dark:text-zinc-800" 
                       />
                       <circle 
                         cx="12" 
@@ -86,7 +88,7 @@ export default function FeatureAiDetection() {
                     `}</style>
                   </div>
                   <span className="transition-all duration-200 text-blue-600 dark:text-blue-400 font-semibold">
-                    Grammar check
+                    {t("features.ai.item2")}
                   </span>
                 </div>
               </li>
@@ -95,11 +97,11 @@ export default function FeatureAiDetection() {
 
           {/* Right Image/Illustration Column */}
           <div className="flex-1 w-full md:w-auto relative">
-            <div className="relative aspect-[3/2] w-full overflow-hidden rounded-xl border border-border/40 shadow-sm group">
+            <div className="relative aspect-[3/2] w-full overflow-hidden rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 shadow-sm group">
               {/* Decorative gradient overlay */}
               <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-blue-600/10 z-10 pointer-events-none"></div>
               
-              <div className="w-full h-full bg-white dark:bg-slate-900 flex items-center justify-center">
+              <div className="w-full h-full bg-white dark:bg-zinc-900 flex items-center justify-center">
                 <Image
                   alt="Grammar check"
                   src="https://slelguoygbfzlpylpxfs.supabase.co/storage/v1/object/public/test-clones/77ba5549-92dc-4b2e-a2cb-758e9202b940-magicv-art/assets/svgs/grammar-1.svg"
