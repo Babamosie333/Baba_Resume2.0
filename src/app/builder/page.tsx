@@ -427,17 +427,20 @@ import { useLanguage } from "@/components/language-provider";
                     </div>
                   </div>
                   <div className="grid grid-cols-10 sm:grid-cols-20 gap-1">
-                    {Array.from({ length: 40 }).map((_, i) => {
+                    {mounted && githubStats ? Array.from({ length: 40 }).map((_, i) => {
                       const intensities = ['bg-zinc-100 dark:bg-zinc-800', 'bg-green-900/20', 'bg-green-700/40', 'bg-green-500/60', 'bg-green-500'];
-                      const randomIntensity = intensities[Math.floor(Math.random() * intensities.length)];
+                      const intensityIndex = githubStats.intensities[i];
+                      const randomIntensity = intensities[intensityIndex];
                       return (
                         <div 
                           key={i} 
                           className={`aspect-square w-full rounded-[1px] ${randomIntensity} transition-colors hover:ring-1 hover:ring-green-400 cursor-help`}
-                          title={`${Math.floor(Math.random() * 10)} contributions`}
+                          title={`${githubStats.contributions[i]} contributions`}
                         />
                       );
-                    })}
+                    }) : Array.from({ length: 40 }).map((_, i) => (
+                      <div key={i} className="aspect-square w-full rounded-[1px] bg-zinc-100 dark:bg-zinc-800" />
+                    ))}
                   </div>
                 </div>
 
