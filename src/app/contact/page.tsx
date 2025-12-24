@@ -50,7 +50,7 @@ export default function ContactPage() {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
     if (!validate()) return;
@@ -60,19 +60,16 @@ export default function ContactPage() {
     setErrors({});
 
     try {
-      const response = await fetch("/api/contact", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.error || "Failed to send message");
-      }
+      const subject = encodeURIComponent(formData.subject);
+      const body = encodeURIComponent(
+        `Name: ${formData.firstName} ${formData.lastName}\n` +
+        `Email: ${formData.email}\n\n` +
+        `Message:\n${formData.message}`
+      );
+      
+      const mailtoUrl = `mailto:vikramsingh1405206@gmail.com?subject=${subject}&body=${body}`;
+      
+      window.location.href = mailtoUrl;
 
       setIsSuccess(true);
       setFormData({
@@ -83,11 +80,10 @@ export default function ContactPage() {
         message: ""
       });
 
-      // Hide success message after 5 seconds
       setTimeout(() => setIsSuccess(false), 5000);
     } catch (error: any) {
       console.error("Form Error:", error);
-      setErrorMessage(error.message || "An error occurred. Please try again later.");
+      setErrorMessage("Could not open email client. Please try manually.");
     } finally {
       setIsSubmitting(false);
     }
