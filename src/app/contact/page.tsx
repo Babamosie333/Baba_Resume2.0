@@ -55,51 +55,23 @@ export default function ContactPage() {
     
     if (!validate()) return;
     
-    setIsSubmitting(true);
-    setIsSuccess(false);
-    setErrorMessage("");
+    const { firstName, lastName, email, subject, message } = formData;
+    const body = `Name: ${firstName} ${lastName}\nEmail: ${email}\n\nMessage:\n${message}`;
+    const mailtoUrl = `mailto:vikramsingh14052008@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
     
-    try {
-      const response = await fetch('/api/contact', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
+    window.location.href = mailtoUrl;
+    
+    setIsSuccess(true);
+    setFormData({
+      firstName: "",
+      lastName: "",
+      email: "",
+      subject: "General Inquiry",
+      message: ""
+    });
 
-      const result = await response.json();
-
-      if (!response.ok) {
-        if (result.details) {
-          setErrors(result.details);
-        }
-        
-        // If there are validation errors, don't show the generic red banner
-        // unless it's a non-validation error
-        if (result.error === 'Validation failed') {
-          return;
-        }
-        
-        throw new Error(result.error || 'Failed to send message');
-      }
-      
-      setIsSuccess(true);
-      setFormData({
-        firstName: "",
-        lastName: "",
-        email: "",
-        subject: "General Inquiry",
-        message: ""
-      });
-
-      // Hide success message after 5 seconds
-      setTimeout(() => setIsSuccess(false), 5000);
-    } catch (error: any) {
-      setErrorMessage(error.message || "Failed to send message, please try again later");
-    } finally {
-      setIsSubmitting(false);
-    }
+    // Hide success message after 5 seconds
+    setTimeout(() => setIsSuccess(false), 5000);
   };
 
   return (
