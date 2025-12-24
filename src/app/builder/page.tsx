@@ -239,7 +239,7 @@ import { useLanguage } from "@/components/language-provider";
                         />
                       </div>
                       <div className="space-y-1">
-                        <label className="text-xs font-bold uppercase text-zinc-400">Working Days / Availability</label>
+                        <label className="text-xs font-bold uppercase text-zinc-400">{t("builder.availability")}</label>
                         <input 
                           type="text" 
                           name="availability"
@@ -288,12 +288,12 @@ import { useLanguage } from "@/components/language-provider";
                     </div>
                   </div>
                 <div className="space-y-1">
-                  <label className="text-xs font-bold uppercase text-zinc-400">Professional Summary</label>
+                  <label className="text-xs font-bold uppercase text-zinc-400">{t("builder.summary")}</label>
                   <textarea 
                     name="summary"
                     value={data.personalInfo.summary}
                     onChange={handlePersonalInfoChange}
-                    placeholder="Briefly describe your career background..."
+                    placeholder={t("builder.summaryPlaceholder")}
                     className="w-full px-3 py-2 rounded-lg border border-zinc-200 dark:border-zinc-800 dark:bg-zinc-950 dark:text-white focus:outline-none focus:ring-2 focus:ring-black/5 h-20 resize-none"
                   />
                 </div>
@@ -342,12 +342,12 @@ import { useLanguage } from "@/components/language-provider";
                         </div>
                       </div>
                       <div className="space-y-1">
-                        <label className="text-xs font-bold uppercase text-zinc-400">Duration</label>
+                        <label className="text-xs font-bold uppercase text-zinc-400">{t("builder.duration")}</label>
                         <input 
                           type="text" 
                           value={exp.duration}
                           onChange={(e) => handleListChange('experience', index, 'duration', e.target.value)}
-                          placeholder="Jan 2020 - Present"
+                          placeholder={t("builder.durationPlaceholder")}
                           className="w-full px-3 py-2 rounded-lg border border-zinc-200 dark:border-zinc-800 dark:bg-zinc-950 dark:text-white focus:outline-none focus:ring-2 focus:ring-black/5"
                         />
                       </div>
@@ -356,7 +356,7 @@ import { useLanguage } from "@/components/language-provider";
                         <textarea 
                           value={exp.description}
                           onChange={(e) => handleListChange('experience', index, 'description', e.target.value)}
-                          placeholder="Describe your achievements..."
+                          placeholder={t("builder.description")}
                           className="w-full px-3 py-2 rounded-lg border border-zinc-200 dark:border-zinc-800 dark:bg-zinc-950 dark:text-white focus:outline-none focus:ring-2 focus:ring-black/5 h-24 resize-none"
                         />
                       </div>
@@ -380,7 +380,7 @@ import { useLanguage } from "@/components/language-provider";
                 {/* GitHub Contributions Visual */}
                 <div className="mb-6 p-4 bg-zinc-50 dark:bg-zinc-950 rounded-lg border border-zinc-100 dark:border-zinc-800">
                   <div className="flex items-center justify-between mb-3">
-                    <span className="text-[10px] font-bold uppercase text-zinc-400 tracking-wider">GitHub Contributions (Simulated)</span>
+                    <span className="text-[10px] font-bold uppercase text-zinc-400 tracking-wider">{t("builder.githubContributions")}</span>
                     <div className="flex gap-1">
                       {[1, 2, 3, 4].map((i) => (
                         <div key={i} className={`w-2 h-2 rounded-[1px] ${i === 4 ? 'bg-green-500' : i === 3 ? 'bg-green-600/60' : i === 2 ? 'bg-green-700/30' : 'bg-zinc-200 dark:bg-zinc-800'}`} />
@@ -438,7 +438,7 @@ import { useLanguage } from "@/components/language-provider";
                         <textarea 
                           value={proj.description}
                           onChange={(e) => handleListChange('projects', index, 'description', e.target.value)}
-                          placeholder="Describe the project achievements and tech stack..."
+                          placeholder={t("builder.projectDescPlaceholder")}
                           className="w-full px-3 py-2 rounded-lg border border-zinc-200 dark:border-zinc-800 dark:bg-zinc-950 dark:text-white focus:outline-none focus:ring-2 focus:ring-black/5 h-20 resize-none"
                         />
                       </div>
@@ -523,7 +523,7 @@ import { useLanguage } from "@/components/language-provider";
                           type="text" 
                           value={skill}
                           onChange={(e) => handleArrayChange('skills', index, e.target.value)}
-                          placeholder="Skill"
+                          placeholder={t("builder.skillPlaceholder")}
                           className="w-full px-3 py-2 rounded-lg border border-zinc-200 dark:border-zinc-800 dark:bg-zinc-950 dark:text-white focus:outline-none focus:ring-2 focus:ring-black/5 text-sm"
                         />
                         <button onClick={() => removeItem('skills', index)} className="absolute right-2 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-red-500 opacity-0 group-hover:opacity-100"><Trash2 className="w-3 h-3"/></button>
@@ -549,7 +549,7 @@ import { useLanguage } from "@/components/language-provider";
                           type="text" 
                           value={lang}
                           onChange={(e) => handleArrayChange('languages', index, e.target.value)}
-                          placeholder="Language"
+                          placeholder={t("builder.languagePlaceholder")}
                           className="w-full px-3 py-2 rounded-lg border border-zinc-200 dark:border-zinc-800 dark:bg-zinc-950 dark:text-white focus:outline-none focus:ring-2 focus:ring-black/5 text-sm"
                         />
                         <button onClick={() => removeItem('languages', index)} className="absolute right-2 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-red-500 opacity-0 group-hover:opacity-100"><Trash2 className="w-3 h-3"/></button>
@@ -598,7 +598,7 @@ import { useLanguage } from "@/components/language-provider";
                 {data.personalInfo.phone && <span>{data.personalInfo.phone}</span>}
                 {data.personalInfo.location && <span>{data.personalInfo.location}</span>}
               </div>
-              {data.personalInfo.availability && <div className="text-[10px] uppercase tracking-wider font-bold text-zinc-400 mt-1">Available: {data.personalInfo.availability}</div>}
+              {data.personalInfo.availability && <div className="text-[10px] uppercase tracking-wider font-bold text-zinc-400 mt-1">{t("builder.availability")}: {data.personalInfo.availability}</div>}
             </div>
             {data.personalInfo.photo && (
               <img src={data.personalInfo.photo} alt="Profile" className="w-20 h-20 object-cover rounded-lg border border-black" />
@@ -712,7 +712,7 @@ import { useLanguage } from "@/components/language-provider";
               </section>
 
               <section>
-                <h2 className="text-[10px] font-black uppercase text-zinc-400 mb-2 tracking-widest">Education</h2>
+                <h2 className="text-[10px] font-black uppercase text-zinc-400 mb-2 tracking-widest">{t("builder.education")}</h2>
                 <div className="space-y-4">
                   {data.education.map((edu, i) => (
                     edu.school && (
@@ -727,7 +727,7 @@ import { useLanguage } from "@/components/language-provider";
               </section>
 
               <section>
-                <h2 className="text-[10px] font-black uppercase text-zinc-400 mb-2 tracking-widest">Skills</h2>
+                <h2 className="text-[10px] font-black uppercase text-zinc-400 mb-2 tracking-widest">{t("builder.skills")}</h2>
                 <div className="flex flex-wrap gap-1">
                   {data.skills.map((skill, i) => skill && (
                     <span key={i} className="px-2 py-1 bg-black text-white text-[9px] font-bold rounded uppercase tracking-tighter">
@@ -738,7 +738,7 @@ import { useLanguage } from "@/components/language-provider";
               </section>
 
               <section>
-                <h2 className="text-[10px] font-black uppercase text-zinc-400 mb-2 tracking-widest">Languages</h2>
+                <h2 className="text-[10px] font-black uppercase text-zinc-400 mb-2 tracking-widest">{t("builder.languages")}</h2>
                 <div className="flex flex-wrap gap-1">
                   {data.languages.map((lang, i) => lang && (
                     <span key={i} className="text-xs font-bold">{lang}</span>
@@ -757,7 +757,7 @@ import { useLanguage } from "@/components/language-provider";
             )}
 
             <section className="mb-8">
-              <h2 className="text-[10px] font-black uppercase text-zinc-400 mb-4 tracking-widest">Experience</h2>
+              <h2 className="text-[10px] font-black uppercase text-zinc-400 mb-4 tracking-widest">{t("builder.experience")}</h2>
               <div className="space-y-6">
                 {data.experience.map((exp, i) => (
                   exp.company && (
@@ -777,7 +777,7 @@ import { useLanguage } from "@/components/language-provider";
 
             {data.projects.some(p => p.name) && (
               <section>
-                <h2 className="text-[10px] font-black uppercase text-zinc-400 mb-4 tracking-widest">Projects</h2>
+                <h2 className="text-[10px] font-black uppercase text-zinc-400 mb-4 tracking-widest">{t("builder.projects")}</h2>
                 <div className="space-y-6">
                   {data.projects.map((proj, i) => (
                     proj.name && (
@@ -815,7 +815,7 @@ import { useLanguage } from "@/components/language-provider";
       <div className="space-y-6">
         {data.personalInfo.summary && (
           <div>
-            <h2 className="text-xs font-bold uppercase tracking-[0.2em] border-b border-zinc-200 pb-1 mb-3">Professional Summary</h2>
+            <h2 className="text-xs font-bold uppercase tracking-[0.2em] border-b border-zinc-200 pb-1 mb-3">{t("builder.summary")}</h2>
             <p className="text-sm leading-relaxed text-zinc-700">{data.personalInfo.summary}</p>
           </div>
         )}
