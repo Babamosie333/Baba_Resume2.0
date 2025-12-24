@@ -148,7 +148,6 @@ const translations: Record<Language, Record<string, string>> = {
     "nav.starOnGithub": "गिटहब पर स्टार करें",
     "nav.builder": "बिल्डर",
     "nav.templates": "टेम्प्लेट",
-    "nav.pricing": "कीमत",
     "nav.about": "हमारे बारे में",
     "nav.contact": "संपर्क करें",
     "hero.badge": "स्मार्ट रिज्यूमे निर्माण",
