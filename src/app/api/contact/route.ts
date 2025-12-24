@@ -1,22 +1,48 @@
 import { Resend } from 'resend';
 import { NextResponse } from 'next/server';
+import { z } from 'zod';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
+const contactSchema = z.object({
+  firstName: z.string().min(1, 'First name is required').max(100),
+  lastName: z.string().min(1, 'Last name is required').max(100),
+  email: z.string().email('Invalid email address'),
+  subject: z.string().min(1, 'Subject is required').max(100),
+  message: z.string().min(1, 'Message is required').max(2000),
+});
+
 export async function POST(request: Request) {
   try {
-    const { firstName, lastName, email, subject, message } = await request.json();
+    const body = await request.json();
+    console.log('Contact form body:', body);
 
-    if (!firstName || !lastName || !email || !subject || !message) {
+    const result = contactSchema.safeParse(body);
+
+    if (!result.success) {
+      const fieldErrors: Record<string, string> = {};
+      result.error.errors.forEach((err) => {
+        if (err.path[0]) {
+          fieldErrors[err.path[0].toString()] = err.message;
+        }
+      });
+
+      console.error('Validation errors:', fieldErrors);
       return NextResponse.json(
-        { error: 'All fields are required' },
+        { 
+          success: false,
+          error: 'Validation failed', 
+          details: fieldErrors 
+        },
         { status: 400 }
       );
     }
 
+    const { firstName, lastName, email, subject, message } = result.data;
+
     const { data, error } = await resend.emails.send({
       from: 'Contact Form <onboarding@resend.dev>',
-      to: 'vikramsingh14052006@gmail.com',
+      to: 'vikramsingh14052008@gmail.com',
       subject: `New Contact Form Submission: ${subject}`,
       replyTo: email,
       html: `
@@ -31,12 +57,12 @@ export async function POST(request: Request) {
 
     if (error) {
       console.error('Resend error:', error);
-      return NextResponse.json({ error: error.message }, { status: 400 });
+      return NextResponse.json({ success: false, error: error.message }, { status: 400 });
     }
 
-    return NextResponse.json({ message: 'Email sent successfully', data });
+    return NextResponse.json({ success: true, message: 'Email sent successfully', data });
   } catch (error: any) {
     console.error('API error:', error);
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    return NextResponse.json({ success: false, error: error.message }, { status: 500 });
   }
 }
