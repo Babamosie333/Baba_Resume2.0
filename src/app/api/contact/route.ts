@@ -36,6 +36,11 @@ export async function POST(request: Request) {
     const apiKey = process.env.RESEND_API_KEY;
     const envStatus = apiKey ? (apiKey.startsWith('re_') ? 'valid_format' : 'invalid_format') : 'missing';
     
+    console.log('--- DEBUG INFO ---');
+    console.log('RESEND_API_KEY status:', envStatus);
+    if (apiKey) console.log('RESEND_API_KEY length:', apiKey.length);
+    console.log('------------------');
+
     if (!apiKey) {
       return NextResponse.json(
         { 
