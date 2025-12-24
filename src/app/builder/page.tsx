@@ -104,6 +104,17 @@ import { useLanguage } from "@/components/language-provider";
       languages: ["English", "Hindi"],
     });
 
+    const [mounted, setMounted] = useState(false);
+    const [githubStats, setGithubStats] = useState<{intensities: number[], contributions: number[]} | null>(null);
+
+    useEffect(() => {
+      setMounted(true);
+      // Generate static random values for GitHub graph to avoid hydration mismatch
+      const intensities = Array.from({ length: 40 }, () => Math.floor(Math.random() * 5));
+      const contributions = Array.from({ length: 40 }, () => Math.floor(Math.random() * 10));
+      setGithubStats({ intensities, contributions });
+    }, []);
+
     const handlePhotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
       const file = e.target.files?.[0];
       if (file) {
