@@ -51,10 +51,37 @@ export default function BuilderPage() {
     setData(prev => ({ ...prev, experience: newExperience }));
   };
 
+  const handleEducationChange = (index: number, e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    const newEducation = [...data.education];
+    newEducation[index] = { ...newEducation[index], [name]: value };
+    setData(prev => ({ ...prev, education: newEducation }));
+  };
+
+  const handleSkillChange = (index: number, value: string) => {
+    const newSkills = [...data.skills];
+    newSkills[index] = value;
+    setData(prev => ({ ...prev, skills: newSkills }));
+  };
+
   const addExperience = () => {
     setData(prev => ({
       ...prev,
       experience: [...prev.experience, { company: "", role: "", duration: "", description: "" }]
+    }));
+  };
+
+  const addEducation = () => {
+    setData(prev => ({
+      ...prev,
+      education: [...prev.education, { school: "", degree: "", year: "" }]
+    }));
+  };
+
+  const addSkill = () => {
+    setData(prev => ({
+      ...prev,
+      skills: [...prev.skills, ""]
     }));
   };
 
