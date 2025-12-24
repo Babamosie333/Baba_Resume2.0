@@ -74,6 +74,13 @@ export default function ContactPage() {
         if (result.details) {
           setErrors(result.details);
         }
+        
+        // If there are validation errors, don't show the generic red banner
+        // unless it's a non-validation error
+        if (result.error === 'Validation failed') {
+          return;
+        }
+        
         throw new Error(result.error || 'Failed to send message');
       }
       
