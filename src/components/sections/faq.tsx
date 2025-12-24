@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { ChevronDown } from "lucide-react";
+import { useLanguage } from "@/components/language-provider";
 
 interface FAQItemProps {
   question: string;
@@ -17,30 +18,30 @@ const FAQItem: React.FC<FAQItemProps> = ({
   onToggle,
 }) => {
   return (
-    <div className="border-b border-border">
+    <div className="border-b border-zinc-200 dark:border-zinc-800 transition-colors duration-200">
       <h3 className="flex">
         <button
           type="button"
           onClick={onToggle}
-          className="flex flex-1 items-center justify-between py-6 transition-all hover:no-underline text-left text-lg font-medium text-foreground group"
+          className="flex flex-1 items-center justify-between py-6 transition-all hover:no-underline text-left text-lg font-medium text-zinc-900 dark:text-white group"
           aria-expanded={isOpen}
         >
-          <span className="group-hover:text-primary transition-colors">
+          <span className="group-hover:text-zinc-600 dark:group-hover:text-zinc-400 transition-colors">
             {question}
           </span>
           <ChevronDown
-            className={`h-4 w-4 shrink-0 text-muted-foreground transition-transform duration-200 ${
+            className={`h-4 w-4 shrink-0 text-zinc-500 transition-transform duration-200 ${
               isOpen ? "rotate-180" : ""
             }`}
           />
         </button>
       </h3>
       <div
-        className={`overflow-hidden transition-all duration-200 ease-out ${
-          isOpen ? "max-h-96 pb-6 opacity-100" : "max-h-0 opacity-0"
+        className={`overflow-hidden transition-all duration-300 ease-in-out ${
+          isOpen ? "max-h-[500px] pb-6 opacity-100" : "max-h-0 opacity-0"
         }`}
       >
-        <p className="text-muted-foreground text-[16px] leading-[1.6]">
+        <p className="text-zinc-600 dark:text-zinc-400 text-[16px] leading-[1.6]">
           {answer}
         </p>
       </div>
@@ -50,32 +51,28 @@ const FAQItem: React.FC<FAQItemProps> = ({
 
 const FAQ: React.FC = () => {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const { t } = useLanguage();
 
   const faqs = [
     {
-      question: "Is Baba_Resume2.0 free to use?",
-      answer:
-        "Yes, Baba_Resume2.0 is completely free to use. You can create, edit, and export your resume without any hidden costs or subscriptions. We believe in providing accessible career tools for everyone.",
+      question: t("faq.q1"),
+      answer: t("faq.a1"),
     },
     {
-      question: "Is my resume data secure?",
-      answer:
-        "Security is our top priority. All your resume data is stored locally in your browser's storage. We do not upload your personal information to our servers, ensuring you maintain 100% control over your data privacy.",
+      question: t("faq.q2"),
+      answer: t("faq.a2"),
     },
     {
-      question: "What export formats are supported?",
-      answer:
-        "Currently, we support high-quality PDF exports which are the industry standard for job applications. The exported files are optimized to be ATS-friendly, ensuring your resume can be read by automated screening systems.",
+      question: t("faq.q3"),
+      answer: t("faq.a3"),
     },
     {
-      question: "How can I sync across devices?",
-      answer:
-        "Since we prioritize privacy and store data locally, automatic cloud syncing is not enabled by default. However, you can use our 'Export Data' feature to download your resume configuration file and 'Import' it on any other device to continue editing.",
+      question: t("faq.q4"),
+      answer: t("faq.a4"),
     },
     {
-      question: "How customizable is it?",
-      answer:
-        "Baba_Resume2.0 offers significant flexibility. You can choose from various professional templates, adjust colors, fonts, and layout spacing. Our AI suggestions also help you tailor the content to specific job descriptions.",
+      question: t("faq.q5"),
+      answer: t("faq.a5"),
     },
   ];
 
@@ -84,11 +81,11 @@ const FAQ: React.FC = () => {
   };
 
   return (
-    <section className="py-20 md:py-32 bg-[#F8F9FB]">
+    <section className="py-20 md:py-32 bg-[#F8F9FB] dark:bg-zinc-900/50 transition-colors duration-200">
       <div className="container mx-auto px-4 max-w-[1200px]">
         <div className="max-w-3xl mx-auto">
-          <h2 className="text-[32px] md:text-[36px] font-bold text-center mb-12 text-foreground tracking-tight">
-            Frequently Asked Questions
+          <h2 className="text-[32px] md:text-[36px] font-bold text-center mb-12 text-zinc-900 dark:text-white tracking-tight">
+            {t("faq.title")}
           </h2>
           <div className="w-full space-y-0">
             {faqs.map((faq, index) => (
